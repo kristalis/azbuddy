@@ -1,18 +1,23 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-}
 
+
+main {
+  background-color: #f9b534;
+  padding: 1.2rem;
+ 
+}
+body {
+  background-color: #f9b534;
+}
 .logo {
-  height: 6em;
-  padding: 1.5em;
+  height: 8em;
+  padding: 0.5em;
   will-change: filter;
 }
+
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
 }
+
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
