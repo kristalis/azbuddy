@@ -11,7 +11,7 @@ module.exports = {
       fontFamily: {
         greatvibes: ['GreatVibes'],
         gillsansnovaabook: ['GillSansNovaBook'],
-        mademirage: ['MadeMirage'],
+        mademirage: ['MadeMirage']
       },
       colors:  {
         dark: '#404041',
@@ -29,6 +29,6 @@ module.exports = {
     },
   },
   plugins: [
-    require('tw-elements/dist/plugin')
+   
   ],
 }

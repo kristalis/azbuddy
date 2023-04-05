@@ -1,24 +1,26 @@
 import {useState,useContext,useEffect} from 'react'
 import authContext from '../context';
 import '../App.css'
-import { Card, Select, Space } from 'antd';
 import logo from '../assets/mychurchbuddy-logo-profile.png';
 import {ChAPI_URL } from '../constants/apiUrl';
 import Churchab from '../navigation/Churchtab';
-import Calendar from '../components/Calender';
+import {
+  useNavigate,
+} from 'react-router-dom'
  
 
 function Noticeboard({ fixed }) {
+const navigate = useNavigate();
 
 useEffect(() => {
-  fetchData(userData.id); 
+  userData ?
+  fetchData(userData.id)
+  : navigate("/church_portal"); 
 }, []);
 
 const { userData, setUserData } = useContext(authContext);
 const [announcement, setAnnouncement] = useState([]);
-const [day, setDay] = useState('');
-const [month, setMonth] = useState('');
-const [time, setTime] = useState('');
+ 
 
 
 const getMonth=(date)=>{
@@ -58,7 +60,6 @@ const resp = await fetch (
 
 const results = await resp.json(); 
 setAnnouncement(results.data);
-//console.log(results.data)
 };
 
 

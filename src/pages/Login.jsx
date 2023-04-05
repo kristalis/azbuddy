@@ -1,7 +1,7 @@
 import { useState,useContext } from 'react'
 import '../App.css'
 import logo from '../assets/mychurchbuddy-logo-profile.png';
-import { API_URL, ChAPI_URL } from '../constants/apiUrl';
+import { ChAPI_URL } from '../constants/apiUrl';
 import Button from '../components/PressableButton';
 import {
    useNavigate,
@@ -9,6 +9,7 @@ import {
 
 import authContext from '../context';
 import Bottomtab from '../navigation/Bottomtab';
+import Advert from '../components/Advert';
 
 function Login({ fixed }) {
   const navigate = useNavigate();
@@ -31,9 +32,7 @@ function Login({ fixed }) {
      fetch(`${ChAPI_URL}/applogin`, requestOptions)
        .then((response) => response.json())
        .then((resp) => {
-         if (resp && resp.user) { 
-          console.log(resp);
-          
+         if (resp && resp.user) {           
           setUserData({...resp.user,token: resp.access_token})      
           navigate("/noticeboard")
          } 
@@ -45,9 +44,7 @@ function Login({ fixed }) {
           setErrorMessage("Something went wrong. Try again later");
        });
  };
- const clickMe =  () => {
-  console.log("You clicked me!");
-}
+
 
   return (
     <>
@@ -75,7 +72,7 @@ function Login({ fixed }) {
                   w-full
                   px-3
                   py-1.5
-                  text-xl
+                  text-base
                   font-normal
                   text-gray-700
                   bg-white bg-clip-padding
@@ -97,17 +94,20 @@ function Login({ fixed }) {
           <div className="flex justify-center mb-5">
             <Button className="bg-secondary uppercase text-white" clickMe={fetchLoginData}>login</Button>
           </div>
-          <div className="text-center px-8">
-            <p className="text-[1.5rem] font-medium leading-8 text-black-600/95 font-mademirage">Is your Church a Buddy?</p>
-            <p className="text-[1.5rem] font-medium leading-8 text-indigo-600/95 font-gillsansnovaabook">Never again will you miss out on your church activities and events with myChurchBuddy.</p>
+            
+          <div className='block rounded-lg shadow-lg bg-gray-100 text-center p-6 mb-2'>
+            <div className="flex mb-2">
+              <a href="/settings" className="text-[1rem] font-medium text-secondary hover:text-secondary-700 focus:text-secondary-800 duration-300 transition ease-in-out text-sm" target="_blank">Is your Church a Buddy?</a>
+            </div>
+            <div className="flex mb-2">
+              <p className="font-medium text-dark-600 hover:text-purple-700 focus:text-dark-800 duration-300 transition ease-in-out text-sm">Never again will you miss out on your church activities and events with myChurchBuddy</p>
+            </div>
+            <div className="flex mb-2">
+              <a href="/settings" className="text-[1rem] font-medium text-primary hover:text-purple-700 focus:text-secondary-800 duration-300 transition ease-in-out text-sm" target="_blank">Get your church to Get in Touch</a>
+            </div>
           </div>
-
-          <div className="mt-10 flex justify-center">
-        <img className="h-96 w-full rounded-xl object-cover lg:w-4/5" src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1632&q=80" />
-        </div>
-
-
-
+     
+        <Advert/>
       </div> 
 
 

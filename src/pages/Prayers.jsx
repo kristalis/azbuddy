@@ -2,17 +2,22 @@ import '../App.css'
 import logo from '../assets/mychurchbuddy-logo-profile.png';
 import {ChAPI_URL } from '../constants/apiUrl';
 import Churchab from '../navigation/Churchtab';
- 
 import {useState,useContext,useEffect} from 'react'
 import authContext from '../context';
-
+import {
+  useNavigate,
+} from 'react-router-dom'
+ 
 function Prayers({ fixed }) {
 
     const { userData, setUserData } = useContext(authContext);
     const [prayers, setPrayers] = useState([]);
-    
+    const navigate = useNavigate();
+
     useEffect(() => {
-        fetchPrayers(userData.id); 
+        userData ?
+        fetchPrayers(userData.id)
+        : navigate("/church_portal"); 
     }, []);
     
     const fetchPrayers = async (userid) => {

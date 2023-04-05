@@ -4,15 +4,21 @@ import '../App.css'
 import logo from '../assets/mychurchbuddy-logo-profile.png';
 import {ChAPI_URL } from '../constants/apiUrl';
 import Churchab from '../navigation/Churchtab';
+import {
+  useNavigate,
+} from 'react-router-dom'
  
 
 function Profile({ fixed }) {
 
   const { userData, setUserData } = useContext(authContext);
   const [profile, setProfile] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
-      fetchProfile(userData.id); 
+      userData ?
+      fetchProfile(userData.id)
+      : navigate("/church_portal"); 
   }, []);
   
   const fetchProfile = async (userid) => {
@@ -43,7 +49,7 @@ function Profile({ fixed }) {
           </header>
           <div className="text-center">
             <p className="text-lg font-medium leading-8 text-indigo-600/95">myChurchBuddy</p>
-            <h1 className=" text-[1.5rem] lg:text-[3.5rem] font-bold leading-[4rem] tracking-tight text-amber-700 font-gillsansnovaabook ">{userData.branch}</h1>
+            <h1 className=" text-[1.5rem] lg:text-[3.5rem] font-bold leading-[4rem] tracking-tight text-amber-700 font-gillsansnovaabook ">{userData?.branch}</h1>
           </div>
       </div>
 
@@ -52,7 +58,7 @@ function Profile({ fixed }) {
           <a href="#!" className="font-medium text-purple-600 hover:text-purple-700 focus:text-purple-800 duration-300 transition ease-in-out text-sm">Resident Pastor</a>
         </div>
         <div className="flex mb-2">
-          <a href="#!" className="font-medium text-dark-600 hover:text-purple-700 focus:text-dark-800 duration-300 transition ease-in-out text-sm">{userData.name}</a>
+          <a href="#!" className="font-medium text-dark-600 hover:text-purple-700 focus:text-dark-800 duration-300 transition ease-in-out text-sm">{userData?.name}</a>
         </div>
       </div>
       <div className='block rounded-lg shadow-lg bg-gray-100 text-center p-6 mb-2'>

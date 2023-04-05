@@ -21,27 +21,27 @@ export default defineConfig({
       "display": "standalone",
       "scope": "/",
       "start_url": "/",
-      "short_name": "vite test",
-      "description": "testing vite pwa",
-      "name": "vite test",
+      "short_name": "myChurchBuddy",
+      "description": "easy access to all your church info",
+      "name": "myChurchBuddy",
       "icons": [
           {
-              "src": "/icon-192x192.png",
+              "src": "/icons/icon-192.png",
               "sizes": "192x192",
               "type": "image/png"
           },
           {
-              "src": "/icon-256x256.png",
+              "src": "/icons/icon-256.png",
               "sizes": "256x256",
               "type": "image/png"
           },
           {
-              "src": "/icon-384x384.png",
+              "src": "/icons/icon-384.png",
               "sizes": "384x384",
               "type": "image/png"
           },
           {
-              "src": "/icon-512x512.png",
+              "src": "/icons/icon-512.png",
               "sizes": "512x512",
               "type": "image/png"
           }

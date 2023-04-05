@@ -16,7 +16,7 @@ children }) => (
     w-full
     px-3
     py-1.5
-    text-xl
+    text-md
     font-normal
     bg-secondary bg-clip-padding
     border border-solid  border-secondary

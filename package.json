@@ -1,7 +1,7 @@
 {
-  "name": "az-biblepeople",
+  "name": "mychurchbuddy",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -15,8 +15,9 @@
     "react-dom": "^18.2.0",
     "react-icons": "^4.7.1",
     "react-router-dom": "^6.8.1",
-    "tw-elements": "^1.0.0-alpha13",
-    "vite-plugin-pwa": "^0.14.4"
+    "vite-plugin-pwa": "^0.14.4",
+    "@emailjs/browser": "^3.10.0",
+    "react-spinners": "^0.13.8"
   },
   "devDependencies": {
     "@types/react": "^18.0.26",
