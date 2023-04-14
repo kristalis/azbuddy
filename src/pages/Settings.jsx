@@ -72,7 +72,7 @@ function Settings({ fixed }) {
           </div>
           <div className="flex justify-center mb-3">
             <textarea
-              class="
+              className="
                 form-control
                 block
                 w-full

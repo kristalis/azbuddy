@@ -3,7 +3,8 @@ import '../App.css'
 import logo from '../assets/mychurchbuddy-logo-profile.png';
 import Button from '../components/PressableButton';
 import Bottomtab from '../navigation/Bottomtab'; 
-
+import { FaYoutube, FaVimeo } from "react-icons/fa";
+import Swal from 'sweetalert2';
 
 function YSNotes({ fixed }) {
     const [link, setLink] = useState('');
@@ -11,46 +12,84 @@ function YSNotes({ fixed }) {
     const [title, setTitle] = useState('');
     const [notes, setNotes] = useState('');
     const [savedVideos, setSavedVideos] = useState([]);
-  
+    const [videoType, setVideoType] = useState('');
+    const [errMsg, setErrMsg] = useState(null);
   
     useEffect(() => {
       const savedVideos = JSON.parse(localStorage.getItem('savedVideos')) || [];
       setSavedVideos(savedVideos);
+
     }, []);
-/*   
-    const extractVideoId = (url) => {
-      const youtubeRegex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/)([\w-]{11})(?:\S+)?$/;
-      const videoId = url.match(youtubeRegex);
-      if (videoId) {
-        return videoId[1];
+
+    useEffect(() => {
+      if (notes !== "") { 
+      const savedVideo = {
+        link,
+        title,
+        notes,
+      };
+    
+      const videoIndex = savedVideos.findIndex((video) => video.link === link);
+    
+      if (videoIndex === -1) {
+        const updatedSavedVideos = [...savedVideos, savedVideo];
+        setSavedVideos(updatedSavedVideos);
+        localStorage.setItem("savedVideos", JSON.stringify(updatedSavedVideos));
+      } else {
+        const updatedSavedVideos = [...savedVideos];
+        updatedSavedVideos[videoIndex].notes = notes;
+        setSavedVideos(updatedSavedVideos);
+        localStorage.setItem("savedVideos", JSON.stringify(updatedSavedVideos));
       }
-      return undefined;
-    }; */
+    }}, [notes]);
+
     const extractVideoId = (url) => {
-      const youtubeRegex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/)([\w-]{11})(?:\S+)?$/;
-      const liveRegex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/live\/)([\w-]+)(?:\S+)?$/;
-      const youtubeMatch = url.match(youtubeRegex);
-      const liveMatch = url.match(liveRegex);
-      if (youtubeMatch) {
-        return youtubeMatch[1];
-      } else if (liveMatch) {
-        return liveMatch[1];
+      
+      let videoId = null;
+      let type = '';
+
+      if (url.includes('youtube.com/watch?v=')) {
+        videoId = url.split('v=')[1]?.split('&')[0];
+        type = 'youtube';
+      } else if (url.includes('youtu.be/')) {
+        videoId = url.split('youtu.be/')[1]?.split('?')[0];
+        type = 'youtube';
+      } else if (url.includes('youtube.com/live/')) {
+        videoId = url.split('youtube.com/live/')[1]?.split('?')[0];
+        type = 'youtube';
       }
-      return undefined;
+       else if (url.includes('vimeo.com/')) {
+        videoId = url.split('vimeo.com/')[1]?.split('?')[0];
+        type = 'vimeo';
+       } 
+
+      setVideoType(type);
+      return videoId;
     };
     const handleSubmit = (e) => {
       e.preventDefault();
       const id = extractVideoId(link);
       if (id) {
-       
+        setErrMsg(null);
+        setNotes('');
         setVideoId(id);
-        const url = `https://www.youtube.com/watch?v=${id}`;
-        setLink(url);
-        fetch(`https://www.youtube.com/oembed?url=${url}&format=json`)
-          .then((response) => response.json())
-          .then((data) => setTitle(data.title))
-          .catch((error) => console.error(error));
-      }
+        if (link.includes('youtube.com/watch?v=') || link.includes('youtu.be/')  || link.includes('youtube.com/live/')) {
+          const url = `https://www.youtube.com/watch?v=${id}`;
+          fetch(`https://www.youtube.com/oembed?url=${url}&format=json`)
+            .then((response) => response.json())
+            .then((data) => setTitle(data.title))
+            .catch((error) => console.error(error));
+        } else if (link.includes('vimeo.com/')) {
+          fetch(`https://vimeo.com/api/oembed.json?url=${link}`)
+            .then((response) => response.json())
+            .then((data) => setTitle(data.title))
+            .catch((error) => console.error(error));
+         } 
+
+      }  else {
+        setVideoType('');
+        setErrMsg('Message could not be loaded. Try pasting the right link [youtube.com/watch?v=][youtu.be/][youtube.com/live/][vimeo.com/]')
+       }
     };
   
     const handleNotesChange = (e) => {
@@ -58,44 +97,53 @@ function YSNotes({ fixed }) {
     };
   
     const handleSave = () => {
-    const savedVideo = {
-      link,
-      title,
-      notes,
-    };
-    const videoIndex = savedVideos.findIndex((video) => video.link === link);
-    if (videoIndex === -1) {
-      const updatedSavedVideos = [...savedVideos, savedVideo];
-      setSavedVideos(updatedSavedVideos);
-      localStorage.setItem('savedVideos', JSON.stringify(updatedSavedVideos));
-    } else {
-      const updatedSavedVideos = [...savedVideos];
-      updatedSavedVideos[videoIndex].notes = notes;
-      setSavedVideos(updatedSavedVideos);
-      localStorage.setItem('savedVideos', JSON.stringify(updatedSavedVideos));
-    }
+
     setNotes('');
     setLink('');
     setVideoId('');
     setTitle('');
+    setErrMsg(null);
   };
   
   const handleSavedVideoClick = (index) => {
-  const savedVideo = savedVideos[index];
-  setVideoId(extractVideoId(savedVideo.link));
-  setTitle(savedVideo.title);
-  setNotes(savedVideo.notes);
-  setLink(savedVideo.link);
+
+    const reversedVideos = savedVideos.slice().reverse();
+    const savedVideo = reversedVideos[index];
+    const videoIndex = savedVideos.indexOf(savedVideo);
+    setVideoId(extractVideoId(savedVideo.link));
+    setTitle(savedVideo.title);
+    setNotes(savedVideo.notes);
+    setLink(savedVideo.link);
+    setErrMsg(null);
+    console.log('listen');
+
+    
   };
-    const handleVideoDisplay = () => {
-      navigator.clipboard.readText()
-        .then(text => {
-          setVideoLink(text);
-        })
-        .catch(error => {
-          console.log('Error reading clipboard text:', error);
-        });
-    };
+
+  const handleDelete = (index) => {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You will not be able to recover the notes on this message!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, keep it'
+    }).then((result) => {
+      if (result.isConfirmed) {
+    const reversedVideos = savedVideos.slice().reverse();
+    const updatedSavedVideos = [...reversedVideos];
+    updatedSavedVideos.splice(index, 1);
+    setSavedVideos(updatedSavedVideos);
+    localStorage.setItem('savedVideos', JSON.stringify(updatedSavedVideos));
+    Swal.fire(
+      'Deleted!',
+      '',
+      'success'
+    )
+  }
+})
+};
+  
 
 
   return (
@@ -110,8 +158,8 @@ function YSNotes({ fixed }) {
           </header>
           <div className="text-center">
             <p className="text-lg font-medium leading-8 text-indigo-600/95">myChurchBuddy</p>
-            <h1 className=" text-[2.5rem] lg:text-[3.5rem] font-bold leading-[4rem] tracking-wider text-amber-700 font-greatvibes">Young Solomon Notes</h1>
-            <h3>watch, listen and take notes from one place</h3>
+            <h1 className=" text-[1.5rem] lg:text-[2.5rem] font-bold leading-[4rem] tracking-wider text-amber-700 font-greatvibes">Young Solomon Notes</h1>
+            <h3>watch and take notes from one place</h3>
           </div>
       </div> 
       
@@ -138,17 +186,23 @@ function YSNotes({ fixed }) {
                   m-0
                   focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none
                 "
-                placeholder="Paste Message Youtube link here"
+                placeholder="Paste Youtube or Vimeo msg link here"
                 value={link}
                 onChange={(e) => setLink(e.target.value)}
               />
       </div>
-      <div className="flex justify-center mb-5">
+      <div className="flex justify-center mb-1">
             <Button className="bg-secondary uppercase text-white" clickMe={handleSubmit}>load message</Button>
-      </div>          
-      {videoId && (
+      </div>  
+      <div className="flex justify-center mb-2">
+      <FaYoutube size={25} className="inline-block mb-1 text-red-600"/><FaVimeo size={25} className="inline-block mb-1 text-blue-400"/>
+      </div>  
+      <div className="flex justify-center mb-2">
+            <h3 className='text-lg font-bold text-black text-center'>{errMsg ? errMsg : ''}</h3>
+      </div>    
+      {videoType === 'youtube' && videoId && (
             <>
-            <div className="flex justify-center mb-5">
+            <div className="flex justify-center">
             <h3 className='text-lg text-secondary'>Title: {title}</h3>
             </div>
             <div className="flex justify-center mb-5">
@@ -164,14 +218,34 @@ function YSNotes({ fixed }) {
             </div>
             </>
       )}
-        {title && (
+  {videoType === 'vimeo' && videoId && (
+  <>
+    <div className="flex justify-center">
+      <h3 className='text-lg text-secondary'>Title: {title}</h3>
+    </div>
+    <div className="flex justify-center mb-2">
+      <iframe
+        title="Vimeo Video"
+        width="560"
+        height="315"
+        src={`https://player.vimeo.com/video/${videoId}`}
+        frameBorder="0"
+        allow="autoplay; fullscreen; picture-in-picture"
+        allowFullScreen
+      ></iframe>
+    </div>
+  </>
+)}
+
+        {title && !errMsg && (
         <>
-        <div className="flex justify-center mb-5">
+        <div className="flex justify-center mb-1">
           <h2 className='text-lg text-secondary'>Make Notes as You Watch & Listen:</h2>
           </div>
             <div className="flex justify-center mb-5">
             <textarea
                 value={notes}
+                id="notes"
                 onChange={handleNotesChange}
                 placeholder="Write your notes here..."
                 rows="10"
@@ -180,25 +254,34 @@ function YSNotes({ fixed }) {
             ></textarea>
            </div>
             <div className="flex justify-center mb-5">
-            <Button className=" bg-neutral-900 uppercase text-white" clickMe={handleSave}>Save Notes</Button>
+            <Button className=" bg-neutral-900 uppercase text-white" clickMe={handleSave}>Close</Button>
         </div>
         </>
       )}
 {savedVideos.length > 0 && (
       <div className="grid md:grid-cols-3 gap-2">
       {
-            savedVideos.map((savedVideo, index)=> (
-        <div className='block rounded-lg shadow-lg bg-gray-100 text-center p-3' key={index}>
-          <div className=" mb-4">
-            <a href="#" onClick={() => handleSavedVideoClick(index)} className=" font-gillsansnovaabook hover:text-purple-700 focus:text-purple-800 duration-300 transition ease-in-out text-xl font-bold"> {savedVideo.title}</a>
-          </div>        
-        </div>
+            savedVideos.slice().reverse().map((savedVideo, index)=> (
+              <div className='block rounded-lg shadow-lg bg-gray-100 text-center p-3' key={index}>
+              <div className="mb-4">
+                <a href="#" onClick={() => handleSavedVideoClick(index)} className="font-gillsansnovaabook hover:text-purple-700 focus:text-purple-800 duration-300 transition ease-in-out text-xl font-bold">
+                  {savedVideo.title}
+                </a>
+              </div> 
+              <div className="flex justify-center">
+                <Button className="bg-amber-700 uppercase text-white mr-2" clickMe={() => handleSavedVideoClick(index)}>
+                  Listen
+                </Button>
+                <Button className="bg-purple-700 uppercase text-white" clickMe={() => handleDelete(index)}>
+                  Delete
+                </Button>
+              </div>
+            </div>
        
             )
       )
 }
-  <div className='block rounded-lg shadow-lg bg-primary py-5'>
-  </div>
+  
       </div>
 )
 }

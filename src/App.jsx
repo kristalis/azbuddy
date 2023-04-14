@@ -15,6 +15,7 @@ import Prayers from './pages/Prayers';
 import authContext from "./context";
 import Welcome from "./pages/Welcome";
 import YSNotes from "./pages/YSNotes";
+import Contacts from "./pages/Followup";
 
 function App() {
   const [userData, setUserData] = useState(null)
@@ -22,14 +23,16 @@ function App() {
   return (
     <authContext.Provider value={{ userData, setUserData }} >
       <Routes>
-        <Route path="/" element={<Welcome/>}/>
+        <Route path="/" element={<YSNotes/>}/>
+        <Route path="/bible_characters" element={<Welcome/>}/>
         <Route path="/settings" element={<Settings/>}/>  
         <Route path="/church_portal" element={<Login/>}/>
         <Route path="/resource" element={<Resource/>}/>
         <Route path="/noticeboard" element={<Noticeboard/>}/>
         <Route path="/prayers" element={<Prayers/>}/>
         <Route path="/profile" element={<Profile/>}/>
-        <Route path="/ysnotes" element={<YSNotes/>}/>
+        <Route path="/contacts" element={<Contacts/>}/>
+        
 
       </Routes>
     </authContext.Provider>

@@ -44,3 +44,9 @@ body {
 .read-the-docs {
   color: #888;
 }
+
+
+#bottom-navigation .active {
+  color: orange;
+  font-weight: bold;
+}

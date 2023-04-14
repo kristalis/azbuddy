@@ -2,7 +2,7 @@ import {
     Link
 } from 'react-router-dom'
   
-import { FaCalendar,FaPrayingHands,FaChurch, FaBible, FaReadme } from "react-icons/fa";
+import { FaCalendar,FaPrayingHands,FaChurch, FaHome, FaReadme } from "react-icons/fa";
 
 function Churchab() {
   return (
@@ -26,8 +26,8 @@ function Churchab() {
           <span className="tab tab-explore block text-xs">Profile</span>
         </Link>
         <Link to="/" className="w-full text-black-700  hover:text-blue-700  focus:text-white justify-center inline-block text-center pt-2 pb-1">
-          <FaBible size={25} className="inline-block mb-1"/>
-          <span className="tab tab-explore block text-xs">AZ</span>
+          <FaHome size={25} className="inline-block mb-1"/>
+          <span className="tab tab-explore block text-xs">Home</span>
         </Link>
       </div>
     </section>

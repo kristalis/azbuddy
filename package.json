@@ -9,15 +9,18 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emailjs/browser": "^3.10.0",
     "@headlessui/react": "^1.7.8",
     "antd": "^5.1.7",
+    "moment": "^2.29.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.7.1",
     "react-router-dom": "^6.8.1",
-    "vite-plugin-pwa": "^0.14.4",
-    "@emailjs/browser": "^3.10.0",
-    "react-spinners": "^0.13.8"
+    "react-spinners": "^0.13.8",
+    "react-whatsapp": "^0.3.0",
+    "sweetalert2": "^11.7.3",
+    "vite-plugin-pwa": "^0.14.4"
   },
   "devDependencies": {
     "@types/react": "^18.0.26",
