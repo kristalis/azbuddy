@@ -19,7 +19,7 @@ const onSearch = (value) => {
         (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
       }
       options={options}
-      className={ mb-5}
+      className='mb-2 w-full'
        
     />
   );

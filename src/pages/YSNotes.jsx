@@ -115,8 +115,6 @@ function YSNotes({ fixed }) {
     setNotes(savedVideo.notes);
     setLink(savedVideo.link);
     setErrMsg(null);
-    console.log('listen');
-
     
   };
 
@@ -205,7 +203,7 @@ function YSNotes({ fixed }) {
             <div className="flex justify-center">
             <h3 className='text-lg text-secondary'>Title: {title}</h3>
             </div>
-            <div className="flex justify-center mb-5">
+            <div className="flex justify-center mb-5 VideoPlayer">
             <iframe
                 title="YouTube Video"
                 width="560"
@@ -223,7 +221,7 @@ function YSNotes({ fixed }) {
     <div className="flex justify-center">
       <h3 className='text-lg text-secondary'>Title: {title}</h3>
     </div>
-    <div className="flex justify-center mb-2">
+    <div className="flex justify-center mb-2 VideoPlayer">
       <iframe
         title="Vimeo Video"
         width="560"

@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import './App.css'
 import {
   Routes,
@@ -16,14 +16,31 @@ import authContext from "./context";
 import Welcome from "./pages/Welcome";
 import YSNotes from "./pages/YSNotes";
 import Contacts from "./pages/Followup";
+import Ministry from "./pages/Ministry";
+import Testimony from "./pages/Testimony";
+import Todo from "./pages/Todo";
+import About from "./pages/About";
 
+import Scriptures from "./pages/Scriptures"; 
 function App() {
   const [userData, setUserData] = useState(null)
-
+  const [width, setWidth] = useState(window.innerWidth);
+  useEffect(() => {
+    window.addEventListener("resize", () => setWidth(window.innerWidth));
+    return () =>
+      window.removeEventListener("resize", () =>
+        setWidth(window.innerWidth)
+      );
+  }, []);
   return (
     <authContext.Provider value={{ userData, setUserData }} >
       <Routes>
-        <Route path="/" element={<YSNotes/>}/>
+      {width > 768 ? (
+          <Route path="/" element={<Welcome />} />
+        ) : (
+          <Route path="/" element={<Todo />} />
+        )}
+       
         <Route path="/bible_characters" element={<Welcome/>}/>
         <Route path="/settings" element={<Settings/>}/>  
         <Route path="/church_portal" element={<Login/>}/>
@@ -32,8 +49,11 @@ function App() {
         <Route path="/prayers" element={<Prayers/>}/>
         <Route path="/profile" element={<Profile/>}/>
         <Route path="/contacts" element={<Contacts/>}/>
-        
-
+        <Route path="/ministry" element={<Ministry/>}/>
+        <Route path="/testimony" element={<Testimony/>}/>
+        <Route path="/msg_notes" element={<YSNotes/>}/>
+        <Route path="/must_know" element={<Scriptures/>}/>
+        <Route path="/about" element={<About/>}/>
       </Routes>
     </authContext.Provider>
     

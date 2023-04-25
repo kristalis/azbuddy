@@ -1,6 +1,6 @@
-import { useEffect, useState, CSSProperties } from 'react'
+import { useEffect, useState} from 'react'
 import '../App.css'
-import { Card, Select, Space } from 'antd';
+import { Card, Select } from 'antd';
 import logo from '../assets/mychurchbuddy-logo-profile.png';
 import { ChAPI_URL } from '../constants/apiUrl';
 import Bottomtab from '../navigation/Bottomtab'; 
@@ -9,6 +9,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 import {
   Link
 } from 'react-router-dom'
+import Button from '../components/PressableButton';
 
 function Welcome({ fixed }) {
 
@@ -67,9 +68,13 @@ function Welcome({ fixed }) {
             <p className="text-lg font-medium leading-8 text-white">myChurchBuddy<sup className='font-greatvibes tracking-widest
              text-secondary text-lg'>beta</sup></p>
             <h1 className=" m-2  text-[1.5rem] lg:text-[3.5rem] font-bold leading-[4rem] tracking-tight text-amber-700">A-Z Bible Characters</h1>
+          
+       
+        
             {isLoading ? (
               <ClipLoader color={'#fff'} size={150} />
             ) : (
+          <>
             <Select
             showSearch
             placeholder="Find out about heroes & villains in the bible ..."
@@ -84,13 +89,37 @@ function Welcome({ fixed }) {
             }
             options={data}
             />
+          <div className="container mx-auto px-4  text-center ">
+            <Link to="/settings" className="p-6 text-md text-gray-900 " >To add your hero<sup className='font-greatvibes tracking-widest
+          text-secondary text-lg'>let us know</sup></Link>
+          </div>
+
+             <Link
+            to="/must_know" 
+            className=" bg-black  
+            uppercase 
+            text-white
+            mb-2 text-center
+            block
+            w-full
+            px-3
+            py-1.5
+            text-md
+            font-normal
+            border border-solid  border-secondary
+            rounded-[0.9rem]
+           
+            transition
+            ease-in-out
+            m-0" >
+              Must Know Scriptures
+          </Link> 
+         </>
         )
+           
           }
         </div>
-        <div className="container mx-auto px-4  text-center ">
-        <Link to="/settings" className="p-6 text-md text-gray-900 " >To add your hero<sup className='font-greatvibes tracking-widest
-          text-secondary text-lg'>let us know</sup></Link>
-        </div>
+      
       <div className="container mx-auto px-4 py-8">
         <div className="mx-auto ">
           

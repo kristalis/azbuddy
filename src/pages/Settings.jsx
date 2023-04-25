@@ -100,22 +100,23 @@ function Settings({ fixed }) {
           </div>
         </form>
         <div className="text-center my-3">
-            <p className="text-[2rem] font-greatvibes leading-8 text-indigo-600/95 ">sponsored ads</p>
+            <p className="text-[2rem] font-greatvibes leading-8 text-indigo-600/95 ">launching soon</p>
         </div>
    
       <div className='block rounded-lg shadow-lg bg-gray-100 text-center p-6 mb-2'>
         <div className="flex mb-2">
-          <a href="https://www.instagram.com/teescriptures" className="font-medium text-purple-600 hover:text-purple-700 focus:text-purple-800 duration-300 transition ease-in-out text-sm" target='_blank'>Checkout Teeblessed</a>
+          <a href="#" className="font-medium text-purple-600 hover:text-purple-700 focus:text-purple-800 duration-300 transition ease-in-out text-sm">Testimony Blogs</a>
         </div>
         <div className="flex mb-2">
-          <p className="font-medium text-dark-600 hover:text-purple-700 focus:text-dark-800 duration-300 transition ease-in-out text-sm">Inspired Christian Tees for your daily outreach</p>
-         
+          <a href="#" className="font-medium text-purple-600 hover:text-purple-700 focus:text-purple-800 duration-300 transition ease-in-out text-sm">Instore</a>
         </div>
-        <div className="flex mb-2">
-      
-          <p className="font-medium text-dark-600 hover:text-purple-700 focus:text-dark-800 duration-300 transition ease-in-out text-sm">Looking for Bulk printing, get in touch</p>
-        </div>
+    
       </div>
+
+        <div className="text-center my-3">
+            <p className="text-[2rem] font-greatvibes leading-8 text-indigo-600/95 ">sponsored ads</p>
+        </div>
+   
       <div className='block rounded-lg shadow-lg bg-gray-100 text-center p-6 mb-2'>
         <div className="flex mb-2">
           <a href="#!" className="font-medium text-purple-600 hover:text-purple-700 focus:text-purple-800 duration-300 transition ease-in-out text-sm">Kristalis Digital</a>

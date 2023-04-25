@@ -78,7 +78,7 @@ setAnnouncement(results.data);
             <h1 className=" text-[2.5rem] lg:text-[3.5rem] font-bold leading-[4rem] tracking-wider text-amber-700 font-greatvibes">Church Board</h1>
           </div>
       </div> 
-      <div class="grid md:grid-cols-3 gap-4">
+      <div className="grid md:grid-cols-3 gap-4">
       {
             announcement?.map((item, i) => (
         <div className='block rounded-lg shadow-lg bg-gray-100 text-center p-12' key={i}>
