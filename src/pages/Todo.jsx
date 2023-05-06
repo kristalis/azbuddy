@@ -4,80 +4,97 @@ import Bottomtab from '../navigation/Bottomtab';
 import Button from '../components/PressableButton';
 import { FaTrash } from 'react-icons/fa';
 import { v4 as uuid } from 'uuid';
-import '../App.css'
+import '../App.css';
+import Goals from '../components/Goals';
+
 
 
 function Todo() {
-    const [todos, setTodos] = useState(JSON.parse(localStorage.getItem('todos')) || []);
-    const [newTodo, setNewTodo] = useState("");
-    const [showForm, setShowForm] = useState(false);
-    const [expandedDay, setExpandedDay] = useState(null);
-    const [groupedTodos, setGroupedTodos] = useState({});
-    useEffect(() => {
-        setGroupedTodos(groupByDay(todos));
-      }, [todos]);
+    // const [todos, setTodos] = useState(JSON.parse(localStorage.getItem('todos')) || []);
+    // const [newTodo, setNewTodo] = useState("");
+    // const [showForm, setShowForm] = useState(false);
+    // const [expandedDay, setExpandedDay] = useState(new Date().toLocaleDateString());
+    // const [groupedTodos, setGroupedTodos] = useState({});
+    // useEffect(() => {
+    //     setGroupedTodos(groupByDay(todos));
+    //   }, [todos]);
+      const [greeting, setGreeting] = useState("");
 
-    const addForm = () => {
-      setShowForm(true);
-    };
-  
-    const handleSubmit = (event) => {
-      event.preventDefault();
-      if (!newTodo.trim()) return;
-      const newDate = new Date().toLocaleDateString();
-      const newTodoItem = { id: uuid(), text: newTodo.trim(), day: newDate, completed: false };
-      const updatedTodos = [...todos, newTodoItem];
-      setTodos(updatedTodos);
-      setNewTodo("");
-      localStorage.setItem('todos', JSON.stringify(updatedTodos));
-    };
-  
-    const deleteTodo = (id) => {
-        const updatedTodos = todos.filter(todo => todo.id !== id);
-        setTodos(updatedTodos);
-        localStorage.setItem("todos", JSON.stringify(updatedTodos));
-      };
-    
-      const toggleTodoCompletion = (id) => {
-        const updatedTodos = [...todos];
-        const todoIndex = updatedTodos.findIndex(todo => todo.id === id);
-        updatedTodos[todoIndex].completed = !updatedTodos[todoIndex].completed;
-        setTodos(updatedTodos);
-        localStorage.setItem("todos", JSON.stringify(updatedTodos));
-      };
-      
-    // const groupByDay = (todos) => {
-    //   const groups = {};
-    //   todos.forEach((todo) => {
-    //     const day = todo.day;
-    //     if (groups[day]) {
-    //       groups[day].push(todo);
-    //     } else {
-    //       groups[day] = [todo];
-    //     }
-    //   });
-    //   return groups;
+      useEffect(() => {
+        // Fetch greetings from database or API
+        const greetings = [
+          "Blessed",
+          "Anointed",
+          "Favoured",
+        ];
+        
+        // Pick a random greeting
+        const randomGreeting = greetings[Math.floor(Math.random() * greetings.length)];
+        
+        // Determine time of day
+        const timeOfDay = new Date().getHours();
+        let timeOfDayGreeting;
+        if (timeOfDay < 12) {
+          timeOfDayGreeting = "Morning";
+        } else if (timeOfDay >= 12 && timeOfDay < 18) {
+          timeOfDayGreeting = "Afternoon";
+        } else {
+          timeOfDayGreeting = "Evening";
+        }
+        
+        // Combine random greeting with time of day greeting
+        setGreeting(`Good ${timeOfDayGreeting} ${randomGreeting} one!`);
+      }, []);
+
+    // const addForm = () => {
+    //   setShowForm(true);
     // };
+  
+    // const handleSubmit = (event) => {
+    //   event.preventDefault();
+    //   if (!newTodo.trim()) return;
+    //   const newDate = new Date().toLocaleDateString();
+    //   const newTodoItem = { id: uuid(), text: newTodo.trim(), day: newDate, completed: false };
+    //   const updatedTodos = [...todos, newTodoItem];
+    //   setTodos(updatedTodos);
+    //   setNewTodo("");
+    //   localStorage.setItem('todos', JSON.stringify(updatedTodos));
+    // };
+  
+    // const deleteTodo = (id) => {
+    //     const updatedTodos = todos.filter(todo => todo.id !== id);
+    //     setTodos(updatedTodos);
+    //     localStorage.setItem("todos", JSON.stringify(updatedTodos));
+    //   };
+    
+    //   const toggleTodoCompletion = (id) => {
+    //     const updatedTodos = [...todos];
+    //     const todoIndex = updatedTodos.findIndex(todo => todo.id === id);
+    //     updatedTodos[todoIndex].completed = !updatedTodos[todoIndex].completed;
+    //     setTodos(updatedTodos);
+    //     localStorage.setItem("todos", JSON.stringify(updatedTodos));
+    //   };
+      
    
-    const groupByDay = (todos) => {
-        const groups = {};
-        todos.forEach((todo) => {
-          const day = todo.day;
-          if (groups[day]) {
-            groups[day].push(todo);
-          } else {
-            groups[day] = [todo];
-          }
-        });
-        return Object.keys(groups).reverse().reduce((acc, day) => {
-          acc[day] = groups[day];
-          return acc;
-        }, {});
-      };
+    // const groupByDay = (todos) => {
+    //     const groups = {};
+    //     todos.forEach((todo) => {
+    //       const day = todo.day;
+    //       if (groups[day]) {
+    //         groups[day].push(todo);
+    //       } else {
+    //         groups[day] = [todo];
+    //       }
+    //     });
+    //     return Object.keys(groups).reverse().reduce((acc, day) => {
+    //       acc[day] = groups[day];
+    //       return acc;
+    //     }, {});
+    //   };
 
-      const toggleExpandedDay = (day) => {
-        setExpandedDay(expandedDay === day ? null : day);
-      };
+    //   const toggleExpandedDay = (day) => {
+    //     setExpandedDay(expandedDay === day ? null : day);
+    //   };
       
 
 
@@ -92,10 +109,13 @@ function Todo() {
       <div className="text-center">
         <p className="text-lg font-medium leading-8 text-indigo-600/95">myChurchBuddy</p>
         <h1 className=" text-[1.5rem] lg:text-[2.5rem] font-bold leading-[4rem] tracking-wider text-amber-700 font-greatvibes">my Daily Ministry Goals</h1>
-  
+        <h1 className=" text-[1rem] lg:text-[.5rem] font-bold text-indigo-600/95 font-mademirage">{greeting}</h1>
+        <h2 className=" text-[1.5rem] lg:text-[2.5rem] font-bold text-indigo-600/95 font-greatvibes">be Thankful today</h2>
+
       </div>
     </div>
-    {!showForm && (
+    <Goals datasource={'todos'} btnTitle={'Add Goal'} placeholder={'add goals for the day'}/>
+    {/* {!showForm && (
         <Button className="bg-secondary uppercase text-white mb-2" clickMe={addForm}>
           Add Goal
         </Button>
@@ -172,7 +192,7 @@ function Todo() {
       </div>
     )}
   </div>
-))}
+))} */}
 
     </main>
     </>

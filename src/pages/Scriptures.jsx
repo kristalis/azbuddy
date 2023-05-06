@@ -52,13 +52,8 @@ function Scriptures() {
 
    
     const handleDataClick = (index) => {
-        const originalIndex = datas.findIndex((data) =>
-        data.version === filteredDatas[index].version &&
-        data.book === filteredDatas[index].book &&
-        data.chapter === filteredDatas[index].chapter &&
-        data.verses === filteredDatas[index].verses &&
-        data.comment === filteredDatas[index].comment
-      );        setShowForm(false);
+        const originalIndex = datas.length - 1 - index;
+        setShowForm(false);
         setShowMemoryForm(false);
         setShowData(true);
         setSelectedDataIndex(originalIndex);
@@ -142,13 +137,7 @@ function Scriptures() {
 
     setShowForm(false);
     setShowData(false);
-    const originalIndex = datas.findIndex((data) =>
-        data.version === filteredDatas[index].version &&
-        data.book === filteredDatas[index].book &&
-        data.chapter === filteredDatas[index].chapter &&
-        data.verses === filteredDatas[index].verses &&
-        data.comment === filteredDatas[index].comment
-    );
+    const originalIndex = datas.length - 1 - index;
     
     setFormData({
       book: datas[originalIndex].book,
@@ -168,13 +157,14 @@ function Scriptures() {
   };
 
   const handleGapClick = (index) => {
-    const originalIndex = datas.findIndex((data) =>
-      data.version === filteredDatas[index].version &&
-      data.book === filteredDatas[index].book &&
-      data.chapter === filteredDatas[index].chapter &&
-      data.verses === filteredDatas[index].verses &&
-      data.comment === filteredDatas[index].comment
-    );
+    // const originalIndex = datas.findIndex((data) =>
+    //   data.version === filteredDatas[index].version &&
+    //   data.book === filteredDatas[index].book &&
+    //   data.chapter === filteredDatas[index].chapter &&
+    //   data.verses === filteredDatas[index].verses &&
+    //   data.comment === filteredDatas[index].comment
+    // );
+    const originalIndex = datas.length - 1 - index; 
     setFormData({
         book: datas[originalIndex].book,
         chapter: datas[originalIndex].chapter,
@@ -214,7 +204,7 @@ function Scriptures() {
   
   const handleMemorySubmit = (event) => {
     event.preventDefault();
-    if (formData.comment === memoryValue) {
+    if (formData.comment.trim().toLowerCase() === memoryValue.trim().toLowerCase()) {
         Swal.fire({
             title: "Success!",
             text: "Blessed One, Congratulations on quoting the scripture",
@@ -302,7 +292,7 @@ function Scriptures() {
               m-0
               focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none
             "
-              placeholder="Scripture"
+              placeholder="Paste scripture text"
               value={comment}
               onChange={(e) => setComment(e.target.value)}
             />
@@ -391,7 +381,7 @@ function Scriptures() {
           {datas.length > 0 && (
       <div className="grid md:grid-cols-3 gap-2">
         {
-            filteredDatas.map((data, index) => (
+            filteredDatas.slice().reverse().map((data, index) => (
             <div className='block rounded-lg shadow-lg bg-gray-100 text-center p-3' key={index}>
                 <div className="flex justify-between items-center mb-4">
                     <div className="text-left">

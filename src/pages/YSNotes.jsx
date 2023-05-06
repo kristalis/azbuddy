@@ -3,8 +3,9 @@ import '../App.css'
 import logo from '../assets/mychurchbuddy-logo-profile.png';
 import Button from '../components/PressableButton';
 import Bottomtab from '../navigation/Bottomtab'; 
-import { FaYoutube, FaVimeo } from "react-icons/fa";
+import { FaYoutube, FaVimeo, FaClipboardCheck } from "react-icons/fa";
 import Swal from 'sweetalert2';
+ 
 
 function YSNotes({ fixed }) {
     const [link, setLink] = useState('');
@@ -14,13 +15,31 @@ function YSNotes({ fixed }) {
     const [savedVideos, setSavedVideos] = useState([]);
     const [videoType, setVideoType] = useState('');
     const [errMsg, setErrMsg] = useState(null);
-  
+    const [searchTerm, setSearchTerm] = useState('');
+
     useEffect(() => {
       const savedVideos = JSON.parse(localStorage.getItem('savedVideos')) || [];
       setSavedVideos(savedVideos);
 
     }, []);
+    const [isFixed, setIsFixed] = useState(false);
 
+    useEffect(() => {
+      const handleScroll = () => {
+        if (window.pageYOffset > 0) {
+          setIsFixed(true);
+        } else {
+          setIsFixed(false);
+        }
+      };
+  
+      window.addEventListener("scroll", handleScroll);
+  
+      return () => {
+        window.removeEventListener("scroll", handleScroll);
+      };
+    }, []);
+    
     useEffect(() => {
       if (notes !== "") { 
       const savedVideo = {
@@ -141,7 +160,10 @@ function YSNotes({ fixed }) {
   }
 })
 };
-  
+const filteredVideos = savedVideos.filter((video) =>
+video.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+video.notes.toLowerCase().includes(searchTerm.toLowerCase())
+);
 
 
   return (
@@ -193,17 +215,18 @@ function YSNotes({ fixed }) {
             <Button className="bg-secondary uppercase text-white" clickMe={handleSubmit}>load message</Button>
       </div>  
       <div className="flex justify-center mb-2">
-      <FaYoutube size={25} className="inline-block mb-1 text-red-600"/><FaVimeo size={25} className="inline-block mb-1 text-blue-400"/>
+      <FaYoutube size={25} className="inline-block mb-1 text-red-600"/><FaVimeo size={25} className="inline-block mb-1 text-blue-400"/><FaClipboardCheck size={25} className="inline-block mb-1 text-green-400"/>
       </div>  
       <div className="flex justify-center mb-2">
             <h3 className='text-lg font-bold text-black text-center'>{errMsg ? errMsg : ''}</h3>
       </div>    
       {videoType === 'youtube' && videoId && (
-            <>
-            <div className="flex justify-center">
-            <h3 className='text-lg text-secondary'>Title: {title}</h3>
-            </div>
-            <div className="flex justify-center mb-5 VideoPlayer">
+        <>
+        <div className="flex justify-center">
+        <h3 className='text-lg text-secondary'>Title: {title}</h3>
+        </div>
+        <div className={isFixed ? "video-container-fixed" : "video-container"}>    
+            <div className="flex justify-center mb-5">
             <iframe
                 title="YouTube Video"
                 width="560"
@@ -214,14 +237,16 @@ function YSNotes({ fixed }) {
                 allowFullScreen
             ></iframe>
             </div>
-            </>
+          </div>
+        </>
       )}
   {videoType === 'vimeo' && videoId && (
   <>
     <div className="flex justify-center">
       <h3 className='text-lg text-secondary'>Title: {title}</h3>
     </div>
-    <div className="flex justify-center mb-2 VideoPlayer">
+    <div className={isFixed ? "video-container-fixed" : "video-container"}>
+    <div className="flex justify-center mb-2">
       <iframe
         title="Vimeo Video"
         width="560"
@@ -232,10 +257,11 @@ function YSNotes({ fixed }) {
         allowFullScreen
       ></iframe>
     </div>
-  </>
+    </div>
+    </>
+  
 )}
-
-        {title && !errMsg && (
+     {title && !errMsg && (
         <>
         <div className="flex justify-center mb-1">
           <h2 className='text-lg text-secondary'>Make Notes as You Watch & Listen:</h2>
@@ -254,12 +280,23 @@ function YSNotes({ fixed }) {
             <div className="flex justify-center mb-5">
             <Button className=" bg-neutral-900 uppercase text-white" clickMe={handleSave}>Close</Button>
         </div>
+    
         </>
       )}
+
+<div className="flex justify-center mb-1">
+        <input
+                type="text"
+                placeholder="Search messages by title or notes"
+                className="w-full border rounded-lg p-2 mb-2"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+            /> 
+</div>
 {savedVideos.length > 0 && (
       <div className="grid md:grid-cols-3 gap-2">
       {
-            savedVideos.slice().reverse().map((savedVideo, index)=> (
+            filteredVideos.slice().reverse().map((savedVideo, index)=> (
               <div className='block rounded-lg shadow-lg bg-gray-100 text-center p-3' key={index}>
               <div className="mb-4">
                 <a href="#" onClick={() => handleSavedVideoClick(index)} className="font-gillsansnovaabook hover:text-purple-700 focus:text-purple-800 duration-300 transition ease-in-out text-xl font-bold">

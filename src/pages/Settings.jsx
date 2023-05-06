@@ -1,11 +1,11 @@
-import {useState,useContext,useEffect} from 'react'
+import {useState,useEffect} from 'react'
 import '../App.css'
 import logo from '../assets/mychurchbuddy-logo-profile.png';
 import Button from '../components/PressableButton';
 import Bottomtab from '../navigation/Bottomtab';
  
 
-function Settings({ fixed }) {
+function Settings() {
   const [title,setTitle] = useState('');
   const [message, setMessage] = useState('');
   
@@ -17,22 +17,21 @@ function Settings({ fixed }) {
     };
   fetch('mailto:kmabora@hotmail.com?subject=myChuchBuddy Submission&body=' + JSON.stringify(data))
   .then(() => {
-    console.log('Email sent successfully!');
     setName('');
     setMessage('');
   })
   .catch((error) => {
-    console.error('Error sending email:', error);
     alert('An error occurred while sending your email. Please try again later.');
   });
 };
-   
+
 
   return (
     <>
       <Bottomtab/>
       
       <main>
+ 
         <div className="relative px-2 lg:px-8 py-2 pb-5">
           <header className="flex justify-center ">
             <img src={logo}   alt="A-Z Bible Characters" className='logo'/>
@@ -104,6 +103,9 @@ function Settings({ fixed }) {
         </div>
    
       <div className='block rounded-lg shadow-lg bg-gray-100 text-center p-6 mb-2'>
+      <div className="flex mb-2">
+          <a href="#" className="font-medium text-purple-600 hover:text-purple-700 focus:text-purple-800 duration-300 transition ease-in-out text-sm">Prayer Board</a>
+        </div>
         <div className="flex mb-2">
           <a href="#" className="font-medium text-purple-600 hover:text-purple-700 focus:text-purple-800 duration-300 transition ease-in-out text-sm">Testimony Blogs</a>
         </div>
@@ -125,15 +127,7 @@ function Settings({ fixed }) {
           <a href="#!" className="font-medium text-dark-600 hover:text-purple-700 focus:text-dark-800 duration-300 transition ease-in-out text-sm">Get in touch to get your Web, App or Software idea developed & deployed</a>
         </div>
       </div>
-{/*       
-      <div className='block rounded-lg shadow-lg bg-gray-100 text-center p-6 mb-2'>
-        <div className="flex mb-2">
-          <a href="http://takeitakademy.com" className="font-medium text-purple-600 hover:text-purple-700 focus:text-purple-800 duration-300 transition ease-in-out text-sm" target="_blank">TakeITaKAdemy</a>
-        </div>
-        <div className="flex mb-2">
-          <p className="font-medium text-dark-600 hover:text-purple-700 focus:text-dark-800 duration-300 transition ease-in-out text-sm">Join the group to start learning web or software development</p>
-        </div>
-      </div> */}
+
      
       <div className='block rounded-lg shadow-lg bg-gray-100 text-center p-6 mb-2'>
        

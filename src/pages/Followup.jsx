@@ -6,6 +6,7 @@
     import Button from '../components/PressableButton';
     import { FaArchive, FaWhatsapp,FaPhone,FaSms  } from "react-icons/fa";
     import countries from '../data/countries';
+    import Goals from '../components/Goals';
 
 
     function Followup() {
@@ -39,9 +40,6 @@
         setNumber('');
         setComment('');
         setShowForm(false);
-
-        console.log(updatedContacts);
-
       };
       const addContactForm = () => {
         setShowForm(true);
@@ -49,7 +47,7 @@
       }
 
       const handleContactClick = (index) => {
-        const originalIndex = contacts.findIndex((contact) => contact.timestamp === filteredContacts[index].timestamp);
+        const originalIndex = contacts.length - 1 - index;
         setShowForm(false);
         setSelectedContactIndex(originalIndex);
         setShowContact(true);
@@ -81,44 +79,44 @@
         setSelectedContactIndex(-1);
       };
 
-    const handleWhatsAppClick = () => {
-        const formattedPhoneNumber = formData.number.replace(/^0+/, '');
-        const url =
-            "https://api.whatsapp.com/send?phone=" +
-            encodeURIComponent(selectedCountry + formattedPhoneNumber)   +
-            "&text=" +
-            encodeURIComponent(formData.comment);
-        window.open(url);
-    };
+      const handleWhatsAppClick = () => {
+          const formattedPhoneNumber = formData.number.replace(/^0+/, '');
+          const url =
+              "https://api.whatsapp.com/send?phone=" +
+              encodeURIComponent(selectedCountry + formattedPhoneNumber)   +
+              "&text=" +
+              encodeURIComponent(formData.comment);
+          window.open(url);
+      };
 
-    const handlePhoneClick = () => {
-    window.location.href = `tel:${formData.number}`;
-    }
+      const handlePhoneClick = () => {
+      window.location.href = `tel:${formData.number}`;
+      }
 
-    const handleSmsClick = () => {
-    window.location.href = `sms:${formData.number}?body=${formData.comment}`;
-    };
+      const handleSmsClick = () => {
+      window.location.href = `sms:${formData.number}?body=${formData.comment}`;
+      };
 
-    const handleNotesChange = (event) => {
-    setFormData({ ...formData, comment: event.target.value });
-    };
-    const handleNameChange = (event) => {
-    setFormData({ ...formData, name: event.target.value });
-    };
+      const handleNotesChange = (event) => {
+      setFormData({ ...formData, comment: event.target.value });
+      };
+      const handleNameChange = (event) => {
+      setFormData({ ...formData, name: event.target.value });
+      };
 
-    const handleContactChange = (event) => {
-    setFormData({ ...formData, number: event.target.value });
-    };
-    const handleSearch = (event) => {
-    setShowForm(false);
-    setShowContact(false);
-    setSearchQuery(event.target.value);
+      const handleContactChange = (event) => {
+      setFormData({ ...formData, number: event.target.value });
+      };
+      const handleSearch = (event) => {
+      setShowForm(false);
+      setShowContact(false);
+      setSearchQuery(event.target.value);
 
-    };
+      };
     
-    const filteredContacts = contacts.filter((contact) => {
-    return contact.name.toLowerCase().includes(searchQuery.toLowerCase());
-    });
+      const filteredContacts = contacts.filter((contact) => {
+      return contact.name.toLowerCase().includes(searchQuery.toLowerCase());
+      });
 
 
       return (
@@ -133,17 +131,22 @@
           <div className="text-center">
             <p className="text-lg font-medium leading-8 text-indigo-600/95">myChurchBuddy</p>
             <h1 className=" text-[1.5rem] lg:text-[2.5rem] font-bold leading-[4rem] tracking-wider text-amber-700 font-greatvibes">Outreach Contacts</h1>
-            <h3>Save & follow outreach contacts here</h3>
+            <h3>Follow up & outreach contacts here</h3>
           </div>
         </div>
+        <Goals datasource={'followup'} btnTitle={'Add Follow Up Calls'} placeholder={'add calls to follow up'} inputType={'select'} datasource1={contacts} title={'Follow up on '}/>
         {!showForm && (
-          <Button className="bg-secondary uppercase text-white mb-2" clickMe={addContactForm}>
-            Add Contact
+          <Button className="bg-slate-500 uppercase text-white mb-2" clickMe={addContactForm}>
+            Add New Contact
           </Button>
         )}
 
        
         {showForm && (
+       <>
+        <Button className=" bg-slate-500 uppercase text-white mb-2" clickMe={addContactForm}>
+        New Contact
+        </Button>
           <form onSubmit={handleSubmit}>
             <input
               type="text"
@@ -183,6 +186,7 @@
                 ))}
             </select>
             <div className="relative">
+            
             <div className="absolute top-0 left-0 bottom-0 flex items-center px-3 pointer-events-none">
                 <span className="text-gray-500">{selectedCountry}</span>
             </div>
@@ -195,19 +199,9 @@
                 onChange={(e) => {
                     const inputNumber = e.target.value;
                     setNumber(inputNumber);
-                    // const numberPattern = /^0\d{10}$/;
-                    // if (!numberPattern.test(inputNumber)) {
-                    // setNumberError('Please enter a valid UK phone number');
-                    // } else {
-                    // setNumberError('');
-                    // }
                 }}
             />
             </div>
-
-            {/* {numberError && (
-            <p className="text-red-500 text-xs italic">{numberError}</p>
-            )} */}
             <textarea
               rows="3"
               className="
@@ -233,10 +227,12 @@
               value={comment}
               onChange={(e) => setComment(e.target.value)}
             />
-            <Button className="bg-secondary uppercase text-white mb-2"  type="submit">Save Contact</Button>
+            <Button className="bg-secondary uppercase text-white mb-2"  type="submit">Save New Contact</Button>
           </form>
+        </>
         )}
           {showContact && (
+            
         <form id='contact-form' onSubmit={handleFormSubmit} className="block rounded-lg shadow-lg bg-gray-100 text-center p-3 mt-4 mb-2">
           <label htmlFor="name" className="block text-left mb-1">Name</label>
           <input type="text" id="name" name="name" value={formData.name} onChange={handleNameChange}  className="w-full border rounded-lg p-2 mb-2" />
@@ -280,7 +276,7 @@
           {contacts.length > 0 && (
       <div className="grid md:grid-cols-3 gap-2">
         {
-        filteredContacts.map((contact, index) => (
+        filteredContacts.slice().reverse().map((contact, index) => (
             <div className='block rounded-lg shadow-lg bg-gray-100 text-center p-3' key={index}>
                 <div className="flex justify-between items-center mb-4">
                     <div className="text-left">

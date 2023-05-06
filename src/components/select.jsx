@@ -1,8 +1,8 @@
 import { Select } from 'antd';
 
-const onSearch = (value) => {
-    console.log('search:', value);
-  };
+// const onSearch = (value) => {
+//     console.log('search:', value);
+//   };
 
 
   const SelectData = ({options,setValue,placeholderlabel,mode}) => (
@@ -12,8 +12,7 @@ const onSearch = (value) => {
       placeholder={placeholderlabel}
       optionFilterProp="children"
       onChange={(value) => setValue(value)}
-      onSearch={onSearch}
-
+  
       size="large"
       filterOption={(input, option) =>
         (option?.label ?? '').toLowerCase().includes(input.toLowerCase())

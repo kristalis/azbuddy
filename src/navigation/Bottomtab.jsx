@@ -7,14 +7,16 @@ import '../App.css'
 import SideMenu from './SideMenu';
 
 
+
   
-import { FaRegCalendarCheck,FaBars, FaArchive, FaBible, FaPhone, FaTasks, FaBullseye } from "react-icons/fa";
+import { FaBars, FaArchive, FaBible, FaBullseye, FaPray } from "react-icons/fa";
 
 function Bottomtab() {
 
   const { userData, setUserData } = useContext(authContext);
   const location = useLocation()
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
 
   const toggleDrawer = () => {
     setIsDrawerOpen(!isDrawerOpen);
@@ -43,13 +45,13 @@ function Bottomtab() {
           <span className="tab tab-notes block text-xs">YS Notes</span>
         </Link>
         <Link
-          to="/ministry"
+          to="/quiet_time"
           className={`w-full text-white hover:text-white active:bg-white justify-center inline-block text-center pt-2 pb-1 ${
-            location.pathname === '/ministry' ? 'text-amber-600' : ''
+            location.pathname === '/quiet_time' ? 'text-amber-600' : ''
           }`}
         >
-          <FaTasks size={20} className="inline-block mb-1" />
-          <span className="tab tab-explore block text-xs">Ministry</span>
+          <FaPray size={20} className="inline-block mb-1" />
+          <span className="tab tab-explore block text-xs">QuietTime</span>
         </Link>
 
         <Link
@@ -72,7 +74,9 @@ function Bottomtab() {
         <SideMenu  isOpen={isDrawerOpen} onClose={toggleDrawer} />
      
       </div>
+    
     </section>
+    
   )
 }
 

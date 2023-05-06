@@ -18,12 +18,9 @@ function Login({ fixed }) {
   const [errMsg,setErrorMessage]=useState()
 
   const getChurchLogin = (event) => {
- //   console.log(event.target.value)
     setAppLogin(event.target.value);
   };
   const fetchLoginData = async () => {
-   console.log(appLogin);
-
      const requestOptions = {
        method: "POST",
        headers: { "Content-Type": "application/json" },

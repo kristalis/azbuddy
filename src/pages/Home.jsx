@@ -31,7 +31,6 @@ function App({ fixed }) {
     const options = biblecharacters.users.map(character => ({value: character.name, label: character.name}));
     setData(options);
     setBibleCharacters(biblecharacters)
-   // console.log( biblecharacters.users.map(character =>character.name))
   }
 
   
@@ -45,7 +44,7 @@ function App({ fixed }) {
 
  
   const onSearch = (value) => {
-    console.log('search:', value);
+  
   };
   return (
     <> 
@@ -77,7 +76,6 @@ function App({ fixed }) {
               optionFilterProp="children"
               onChange={onChange}
               onSearch={onSearch}
-            
               size='large'
               style={{
                 width: '100%',

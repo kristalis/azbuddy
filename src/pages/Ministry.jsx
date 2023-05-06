@@ -49,7 +49,8 @@ function Ministry() {
 
    
     const handleDataClick = (index) => {
-        const originalIndex = datas.findIndex((data) => data.selectedDate === filteredDatas[index].selectedDate);
+       // const originalIndex = datas.findIndex((data) => data.selectedDate === filteredDatas[index].selectedDate);
+        const originalIndex = datas.length - 1 - index;
         setShowForm(false);
         setShowData(true);
         setSelectedDataIndex(originalIndex);
@@ -189,7 +190,7 @@ function Ministry() {
        
         {showForm && (
           <form onSubmit={handleSubmit}>
-            <label htmlFor="name" className="block text-center font-bold mb-1">Week Commencing</label>
+            <label htmlFor="name" className="block text-center font-bold mb-1">Weekly activity</label>
             <input
                 type="date"
                 id="week-commencing-date-input"
@@ -311,7 +312,7 @@ function Ministry() {
         )}
        {showDataForm && (
         <form id='contact-form' onSubmit={handleFormSubmit} className="block rounded-lg shadow-lg bg-gray-100 text-center p-3 mt-4 mb-2">
-              <label htmlFor="name" className="block text-center font-bold mb-1">Week Commencing</label>
+              <label htmlFor="name" className="block text-center font-bold mb-1">Weekly Activity</label>
             <input
                 type="date"
                 id="week-commencing-date-input"
@@ -338,7 +339,7 @@ function Ministry() {
             />
           <label htmlFor="callsmade" className="block text-left mb-1">Successful Calls Made</label>
           <input type="text" id="callsmade" name="callsmade" value={formData.callsmade}    className="w-full border rounded-lg p-2 mb-2"   onChange={handleCallsChange}/>
-          <label htmlFor="telechurch" className="block text-left mb-1">Telechurch</label>
+          <label htmlFor="telechurch" className="block text-left mb-1">How many members came to church</label>
           <input type="text" id="telechurch" name="telechurch" value={formData.telechurch}    className="w-full border rounded-lg p-2 mb-2"  onChange={handleTelechurchChange} />
           <label htmlFor="meeting" className="block text-left mb-1">Ministry Meeting Attendance</label>
           <input type="text" id="meeting" name="meeting" value={formData.ministrymeeting}    className="w-full border rounded-lg p-2 mb-2"  onChange={handleMinistryMeetingChange} />
@@ -382,7 +383,7 @@ function Ministry() {
           {datas.length > 0 && (
       <div className="grid md:grid-cols-3 gap-2">
         {
-      filteredDatas.map((data, index) => (
+      filteredDatas.slice().reverse().map((data, index) => (
             <div className='block rounded-lg shadow-lg bg-gray-100 text-center p-3' key={index}>
                 <div className="flex justify-between items-center mb-4">
                     <div className="text-left">

@@ -31,9 +31,7 @@ function Prayers({ fixed }) {
         );
         
         const results = await resp.json(); 
-        setPrayers(results.data.prayers);
-        console.log(results.data.prayers)
-        
+        setPrayers(results.data.prayers);        
         };
 
 

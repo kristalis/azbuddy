@@ -17,14 +17,13 @@ children }) => (
     px-3
     py-1.5
     text-md
-    font-normal
-    bg-secondary bg-clip-padding
+    bg-clip-padding
     border border-solid  border-secondary
     rounded-[0.9rem]
     transition
     ease-in-out
     m-0
-    focus:text-primary focus:bg-secondary focus:border-blue-600 focus:outline-none${
+    focus:outline-none${
       processing && 'opacity-25'
     } ` + className
    

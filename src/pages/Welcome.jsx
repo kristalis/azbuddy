@@ -9,7 +9,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 import {
   Link
 } from 'react-router-dom'
-import Button from '../components/PressableButton';
+
 
 function Welcome({ fixed }) {
 
@@ -38,7 +38,7 @@ function Welcome({ fixed }) {
     setData(options);
     setBibleCharacters(biblecharacters)
     setIsLoading(false);
-   // console.log( biblecharacters.users.map(character =>character.name))
+ 
   }
 
   
@@ -52,7 +52,7 @@ function Welcome({ fixed }) {
 
  
   const onSearch = (value) => {
-    console.log('search:', value);
+     
   };
   return (
     <> 
@@ -80,7 +80,7 @@ function Welcome({ fixed }) {
             placeholder="Find out about heroes & villains in the bible ..."
             optionFilterProp="children"
             onChange={onChange}
-            onSearch={onSearch}
+          
             size='large'
             className='w-full lg:w-2/3 my-3 '
           

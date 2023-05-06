@@ -39,54 +39,7 @@ function SideMenu({isOpen, onClose }) {
           transition
           ease-in-out
           m-0" >
-            How IT Works
-        </Link>
-        <Link
-          to="/" className="bg-primary uppercase text-secondary mb-2 text-center
-          block
-          w-full
-          px-3
-          py-1.5
-          text-md
-          font-normal
-          border border-solid  border-secondary
-          rounded-[0.9rem]
-          transition
-          ease-in-out
-          m-0" >
-            Daily Ministry Goals
-        </Link>
-       
-        
-        <Link
-          to="/noticeboard" className=" bg-slate-200 uppercase text-black mb-2 text-center
-          block
-          w-full
-          px-3
-          py-1.5
-          text-md
-          font-bold
-          border border-solid  border-secondary
-          rounded-[0.9rem]
-          transition
-          ease-in-out
-          m-0" >
-            Noticeboard
-        </Link>
-        <Link
-          to="/msg_notes" className="bg-primary uppercase text-secondary mb-2 text-center
-          block
-          w-full
-          px-3
-          py-1.5
-          text-md
-          font-normal
-          border border-solid  border-secondary
-          rounded-[0.9rem]
-          transition
-          ease-in-out
-          m-0" >
-            Young Solomon Notes
+            About
         </Link>
         <Link
           to="/contacts" className="bg-primary uppercase text-secondary mb-2 text-center
@@ -103,6 +56,52 @@ function SideMenu({isOpen, onClose }) {
           m-0" >
             Outreach
         </Link>
+        {/* <Link
+          to="/" className="bg-primary uppercase text-secondary mb-2 text-center
+          block
+          w-full
+          px-3
+          py-1.5
+          text-md
+          font-normal
+          border border-solid  border-secondary
+          rounded-[0.9rem]
+          transition
+          ease-in-out
+          m-0" >
+            Daily Ministry Goals
+        </Link>      */}
+        <Link
+          to="/noticeboard" className=" bg-slate-200 uppercase text-black mb-2 text-center
+          block
+          w-full
+          px-3
+          py-1.5
+          text-md
+          font-bold
+          border border-solid  border-secondary
+          rounded-[0.9rem]
+          transition
+          ease-in-out
+          m-0" >
+            Noticeboard
+        </Link>
+        {/* <Link
+          to="/msg_notes" className="bg-primary uppercase text-secondary mb-2 text-center
+          block
+          w-full
+          px-3
+          py-1.5
+          text-md
+          font-normal
+          border border-solid  border-secondary
+          rounded-[0.9rem]
+          transition
+          ease-in-out
+          m-0" >
+            Young Solomon Notes
+        </Link> */}
+       
         <Link
           to="/ministry" className="bg-primary uppercase text-secondary mb-2 text-center
           block
@@ -119,13 +118,13 @@ function SideMenu({isOpen, onClose }) {
             Ministry Work
         </Link>
         <Link
-          to="/must_know" className="bg-white uppercase text-black font-bold mb-2 text-center
+          to="/must_know" 
+          className="bg-white uppercase text-black font-bold mb-2 text-center
           block
           w-full
           px-3
           py-1.5
           text-md
-          font-normal
           border border-solid  border-secondary
           rounded-[0.9rem]
           transition
@@ -163,8 +162,8 @@ function SideMenu({isOpen, onClose }) {
           m-0" >
             Bible Characters
         </Link>
-        <Link
-          to="/msg_notes" className="bg-primary uppercase text-secondary mb-2 text-center
+        {/* <Link
+          to="/quiet_time" className="bg-primary uppercase text-secondary mb-2 text-center
           block
           w-full
           px-3
@@ -177,7 +176,7 @@ function SideMenu({isOpen, onClose }) {
           ease-in-out
           m-0" >
             Quiet Time
-        </Link>
+        </Link> */}
         <Link
           to="/settings" className=" bg-slate-200 uppercase text-secondary mb-2 text-center
           block
@@ -192,6 +191,21 @@ function SideMenu({isOpen, onClose }) {
           ease-in-out
           m-0" >
             Testimony Blogs
+        </Link>
+        <Link
+          to="/settings" className=" bg-slate-200 uppercase text-secondary mb-2 text-center
+          block
+          w-full
+          px-3
+          py-1.5
+          text-md
+          font-normal
+          border border-solid  border-secondary
+          rounded-[0.9rem]
+          transition
+          ease-in-out
+          m-0" >
+            Prayer Board
         </Link>
         <Link
           to="/settings" className=" bg-slate-200 uppercase text-secondary mb-2 text-center

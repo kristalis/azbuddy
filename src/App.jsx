@@ -20,6 +20,7 @@ import Ministry from "./pages/Ministry";
 import Testimony from "./pages/Testimony";
 import Todo from "./pages/Todo";
 import About from "./pages/About";
+import Quiettime from "./pages/Quiettime";
 
 import Scriptures from "./pages/Scriptures"; 
 function App() {
@@ -54,6 +55,7 @@ function App() {
         <Route path="/msg_notes" element={<YSNotes/>}/>
         <Route path="/must_know" element={<Scriptures/>}/>
         <Route path="/about" element={<About/>}/>
+        <Route path="/quiet_time" element={<Quiettime/>}/>
       </Routes>
     </authContext.Provider>
     

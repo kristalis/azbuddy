@@ -29,9 +29,6 @@ const getMonth=(date)=>{
   return date.toLocaleDateString(locale,options);
 }
 const getTime=(date)=>{
-  //const options = {hour12: true};
-  // const locale = 'en-US';
-  // return new Date(date).toLocaleTimeString(locale,options);
   const eventDate = new Date(date);
   const hours = eventDate.getHours();
   const mins = eventDate.getMinutes();
