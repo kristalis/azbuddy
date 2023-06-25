@@ -120,7 +120,7 @@ function Goals({datasource, btnTitle, placeholder, inputType = "text",datasource
               value={selectedOption}
               onChange={handleSelectChange}
             >
-              <option>{btnTitle}</option>
+              <option>Select Contact</option>
                {datasource1.map((data,index) => (
                     <option key={index} value={data.name + ' - ' + (data.number)}>
                     {data.name} 

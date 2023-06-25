@@ -26,9 +26,9 @@ function Bottomtab() {
     <section id="bottom-navigation" className="lg:hidden block fixed inset-x-0 bottom-0 z-10 bg-secondary shadow">
       <div id="tabs" className="flex justify-between ml-2">
       <Link
-          to="/"
+          to="/daily_goals"
           className={`w-full text-white hover:text-white active:bg-white justify-center inline-block text-center pt-2 pb-1 ${
-            location.pathname === '/' ? 'text-amber-600' : ''
+            location.pathname === '/daily_goals' ? 'text-amber-600' : ''
           }`}
         >
           <FaBullseye size={20} className="inline-block mb-1" />

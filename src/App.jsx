@@ -21,8 +21,9 @@ import Testimony from "./pages/Testimony";
 import Todo from "./pages/Todo";
 import About from "./pages/About";
 import Quiettime from "./pages/Quiettime";
-
+import DrawyourSword from "./pages/DrawyourSword";
 import Scriptures from "./pages/Scriptures"; 
+
 function App() {
   const [userData, setUserData] = useState(null)
   const [width, setWidth] = useState(window.innerWidth);
@@ -39,9 +40,9 @@ function App() {
       {width > 768 ? (
           <Route path="/" element={<Welcome />} />
         ) : (
-          <Route path="/" element={<Todo />} />
+          <Route path="/" element={<DrawyourSword />} />
         )}
-       
+        <Route path="/daily_goals" element={<Todo/>}/>
         <Route path="/bible_characters" element={<Welcome/>}/>
         <Route path="/settings" element={<Settings/>}/>  
         <Route path="/church_portal" element={<Login/>}/>

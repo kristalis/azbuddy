@@ -50,19 +50,19 @@ function Ministry() {
    
     const handleDataClick = (index) => {
        // const originalIndex = datas.findIndex((data) => data.selectedDate === filteredDatas[index].selectedDate);
-        const originalIndex = datas.length - 1 - index;
+        const originalIndex = filteredDatas.length - 1 - index;
         setShowForm(false);
         setShowData(true);
         setSelectedDataIndex(originalIndex);
         setFormData({
-          selectedDate: datas[originalIndex].selectedDate,
-          callsmade: datas[originalIndex].callsmade,
-          telechurch: datas[originalIndex].telechurch,
-          ministrymeeting: datas[originalIndex].ministrymeeting,
-          ministrychurch: datas[originalIndex].ministrychurch,
-          prayers: datas[originalIndex].prayers,
-          outreach: datas[originalIndex].outreach,
-          comment: datas[originalIndex].comment,
+          selectedDate: filteredDatas[originalIndex].selectedDate,
+          callsmade: filteredDatas[originalIndex].callsmade,
+          telechurch: filteredDatas[originalIndex].telechurch,
+          ministrymeeting: filteredDatas[originalIndex].ministrymeeting,
+          ministrychurch: filteredDatas[originalIndex].ministrychurch,
+          prayers: filteredDatas[originalIndex].prayers,
+          outreach: filteredDatas[originalIndex].outreach,
+          comment: filteredDatas[originalIndex].comment,
         });
              
         const element = document.querySelector('#contact-form');

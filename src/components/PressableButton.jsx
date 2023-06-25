@@ -18,7 +18,7 @@ children }) => (
     py-1.5
     text-md
     bg-clip-padding
-    border border-solid  border-secondary
+    border border-solid 
     rounded-[0.9rem]
     transition
     ease-in-out

@@ -38,7 +38,7 @@ function Settings() {
           </header>
           <div className="text-center">
             <p className="text-[2rem] font-greatvibes leading-8 text-indigo-600/95 ">Get in Touch </p>
-           
+            <p className="text-[1.2rem] font-gillsansnovaabook leading-8 text-black-600/95 ">Send in your feedback to help us make mychurchbuddy #1 Christian app </p>
           </div>
         </div>
         <form onSubmit={handleSubmit}>
@@ -47,7 +47,7 @@ function Settings() {
                   type="text"
                   className="
                     form-control
-                    text-center
+             
                     block
                     w-full
                     px-3
@@ -63,7 +63,7 @@ function Settings() {
                     m-0
                     focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none
                   "
-                  placeholder="Character or Place or Subject"
+                  placeholder="Subject"
                   id="title" 
                   value={title} 
                   onChange={(e) => setTitle(e.target.value)}
@@ -92,13 +92,13 @@ function Settings() {
               value={message} 
               onChange={(e) => setMessage(e.target.value)}
               rows="5"
-              placeholder="Your write up here"/>
+              placeholder="Your feedback or enquiries here"/>
           </div>
           <div className="flex justify-center mb-5">
               <Button className="bg-secondary uppercase text-white" type="submit">Submit</Button>
           </div>
         </form>
-        <div className="text-center my-3">
+        {/* <div className="text-center my-3">
             <p className="text-[2rem] font-greatvibes leading-8 text-indigo-600/95 ">launching soon</p>
         </div>
    
@@ -126,7 +126,7 @@ function Settings() {
         <div className="flex mb-2">
           <a href="#!" className="font-medium text-dark-600 hover:text-purple-700 focus:text-dark-800 duration-300 transition ease-in-out text-sm">Get in touch to get your Web, App or Software idea developed & deployed</a>
         </div>
-      </div>
+      </div> */}
 
      
       <div className='block rounded-lg shadow-lg bg-gray-100 text-center p-6 mb-2'>

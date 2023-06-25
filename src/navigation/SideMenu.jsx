@@ -118,7 +118,7 @@ function SideMenu({isOpen, onClose }) {
             Ministry Work
         </Link>
         <Link
-          to="/must_know" 
+          to="/" 
           className="bg-white uppercase text-black font-bold mb-2 text-center
           block
           w-full
@@ -130,7 +130,7 @@ function SideMenu({isOpen, onClose }) {
           transition
           ease-in-out
           m-0" >
-            GAMES
+            Scriptures for the Month
         </Link>
         <Link
           to="/must_know" className="bg-primary uppercase text-secondary mb-2 text-center
@@ -177,7 +177,7 @@ function SideMenu({isOpen, onClose }) {
           m-0" >
             Quiet Time
         </Link> */}
-        <Link
+        {/* <Link
           to="/settings" className=" bg-slate-200 uppercase text-secondary mb-2 text-center
           block
           w-full
@@ -206,8 +206,8 @@ function SideMenu({isOpen, onClose }) {
           ease-in-out
           m-0" >
             Prayer Board
-        </Link>
-        <Link
+        </Link> */}
+        {/* <Link
           to="/settings" className=" bg-slate-200 uppercase text-secondary mb-2 text-center
           block
           w-full
@@ -221,7 +221,7 @@ function SideMenu({isOpen, onClose }) {
           ease-in-out
           m-0" >
             Instore
-        </Link>
+        </Link> */}
         <Link
           to="/settings" className=" bg-primary uppercase text-secondary mb-2 text-center
           block

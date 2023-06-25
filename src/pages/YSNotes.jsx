@@ -1,21 +1,30 @@
-import {useState,useEffect} from 'react'
+import {useRef,useState,useEffect} from 'react'
 import '../App.css'
 import logo from '../assets/mychurchbuddy-logo-profile.png';
 import Button from '../components/PressableButton';
 import Bottomtab from '../navigation/Bottomtab'; 
-import { FaYoutube, FaVimeo, FaClipboardCheck } from "react-icons/fa";
+import { FaYoutube, FaVimeo, FaClipboardCheck, FaUpload, FaVideo, FaAudible, FaFileAudio, FaAudioDescription, FaTasks } from "react-icons/fa";
 import Swal from 'sweetalert2';
- 
+import Mnotes from '../components/Mnotes';
+import { message, Upload } from 'antd';
+import { UploadOutlined } from '@ant-design/icons';
+import Title from '../components/Title';
 
 function YSNotes({ fixed }) {
     const [link, setLink] = useState('');
     const [videoId, setVideoId] = useState('');
     const [title, setTitle] = useState('');
     const [notes, setNotes] = useState('');
+    const [reference, setReference] = useState('');
+    const [revelation, setRevelation] = useState('');
     const [savedVideos, setSavedVideos] = useState([]);
     const [videoType, setVideoType] = useState('');
     const [errMsg, setErrMsg] = useState(null);
     const [searchTerm, setSearchTerm] = useState('');
+    const [noteFlag, setNoteFlag] = useState(null);
+    const [audioFile, setAudioFile] = useState(null);
+    const hiddenFileInput = useRef(null);
+    const objectUrlRef = useRef(null);
 
     useEffect(() => {
       const savedVideos = JSON.parse(localStorage.getItem('savedVideos')) || [];
@@ -23,6 +32,7 @@ function YSNotes({ fixed }) {
 
     }, []);
     const [isFixed, setIsFixed] = useState(false);
+
 
     useEffect(() => {
       const handleScroll = () => {
@@ -41,14 +51,17 @@ function YSNotes({ fixed }) {
     }, []);
     
     useEffect(() => {
-      if (notes !== "") { 
+      if (notes !== "" || reference != "" || revelation != "") { 
       const savedVideo = {
         link,
         title,
         notes,
+        reference,
+        revelation,
+        audioFile
       };
     
-      const videoIndex = savedVideos.findIndex((video) => video.link === link);
+      const videoIndex = savedVideos.findIndex((video) => video.title === title);
     
       if (videoIndex === -1) {
         const updatedSavedVideos = [...savedVideos, savedVideo];
@@ -56,11 +69,14 @@ function YSNotes({ fixed }) {
         localStorage.setItem("savedVideos", JSON.stringify(updatedSavedVideos));
       } else {
         const updatedSavedVideos = [...savedVideos];
+        updatedSavedVideos[videoIndex].audioFile = audioFile;
         updatedSavedVideos[videoIndex].notes = notes;
+        updatedSavedVideos[videoIndex].reference = reference;
+        updatedSavedVideos[videoIndex].revelation = revelation;
         setSavedVideos(updatedSavedVideos);
         localStorage.setItem("savedVideos", JSON.stringify(updatedSavedVideos));
       }
-    }}, [notes]);
+    }}, [notes, reference, revelation]);
 
     const extractVideoId = (url) => {
       
@@ -113,29 +129,61 @@ function YSNotes({ fixed }) {
   
     const handleNotesChange = (e) => {
       setNotes(e.target.value);
+      setNoteFlag(false)
     };
-  
+    const handleTitleChange = (e) => {
+      setTitle(e.target.value);
+    };
+ 
+    const handleReferenceChange = (e) => {
+      setReference(e.target.value);
+    };
+    const handleRevelationChange = (e) => {
+      setRevelation(e.target.value);
+    };
+ 
     const handleSave = () => {
 
     setNotes('');
     setLink('');
     setVideoId('');
     setTitle('');
+    setReference('');
+    setRevelation('');
+    setAudioFile('');
+    setNoteFlag(false);
     setErrMsg(null);
   };
   
   const handleSavedVideoClick = (index) => {
 
-    const reversedVideos = savedVideos.slice().reverse();
+    const reversedVideos = filteredVideos.slice().reverse();
     const savedVideo = reversedVideos[index];
-    const videoIndex = savedVideos.indexOf(savedVideo);
+   // const videoIndex = filteredVideos.indexOf(savedVideo);
     setVideoId(extractVideoId(savedVideo.link));
     setTitle(savedVideo.title);
     setNotes(savedVideo.notes);
+    setReference(savedVideo.reference);
+    setRevelation(savedVideo.revelation);
     setLink(savedVideo.link);
+    setAudioFile(savedVideo.audioFile);
     setErrMsg(null);
-    
+    setNoteFlag(null);
+    // Scroll to the top of the page
+  window.scrollTo({ top: 0, behavior: 'smooth' });
   };
+
+ const handleMsgType = (noteFlag) => {
+    setNoteFlag(noteFlag);
+    setNotes('');
+    setLink('');
+    setVideoId('');
+    setTitle('');
+    setReference('');
+    setRevelation('');
+    setAudioFile('');
+    setErrMsg(null);
+ }
 
   const handleDelete = (index) => {
     Swal.fire({
@@ -165,6 +213,18 @@ video.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
 video.notes.toLowerCase().includes(searchTerm.toLowerCase())
 );
 
+function handleFileChange(event) {
+  const file = event.target.files[0];
+  setTitle(file.name);
+  const objectUrl = URL.createObjectURL(file);
+ // console.log(file); 
+  setAudioFile(objectUrl);
+}
+const uploadFile = event => {
+  setAudioFile(null);
+  hiddenFileInput.current.click();
+};
+
 
   return (
     <> 
@@ -179,52 +239,98 @@ video.notes.toLowerCase().includes(searchTerm.toLowerCase())
           <div className="text-center">
             <p className="text-lg font-medium leading-8 text-indigo-600/95">myChurchBuddy</p>
             <h1 className=" text-[1.5rem] lg:text-[2.5rem] font-bold leading-[4rem] tracking-wider text-amber-700 font-greatvibes">Young Solomon Notes</h1>
-            <h3>watch and take notes from one place</h3>
           </div>
       </div> 
-      
-      <div className="flex justify-center mb-3">
-              <input
-                 id="link"
-                 type="url"
-                 required
-                className="
-                  form-control
-                  text-center
-                  block
-                  w-full
-                  px-3
-                  py-1.5
-                  text-base
-                  font-normal
-                  text-gray-700
-                  bg-white bg-clip-padding
-                  border border-solid  border-secondary
-                  rounded-[0.9rem]
-                  transition
-                  ease-in-out
-                  m-0
-                  focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none
-                "
-                placeholder="Paste Youtube or Vimeo msg link here"
-                value={link}
-                onChange={(e) => setLink(e.target.value)}
-              />
-      </div>
-      <div className="flex justify-center mb-1">
-            <Button className="bg-secondary uppercase text-white" clickMe={handleSubmit}>load message</Button>
-      </div>  
       <div className="flex justify-center mb-2">
-      <FaYoutube size={25} className="inline-block mb-1 text-red-600"/><FaVimeo size={25} className="inline-block mb-1 text-blue-400"/><FaClipboardCheck size={25} className="inline-block mb-1 text-green-400"/>
-      </div>  
+      <Button className="inline-block mb-1 w-36 text-white bg-black focus:bg-secondary"  clickMe={()=>{handleMsgType('video')}} data-tip="Click me!" data-for="my-tooltip"><FaVideo size={36}/></Button>
+
+      <Button className="inline-block mb-1 w-36 bg-black text-white focus:bg-secondary"  clickMe={()=>{handleMsgType('custom')}}><FaTasks size={36} /></Button>
+
+      {/* <Button className="inline-block mb-1 w-36 bg-black text-white focus:bg-secondary"  clickMe={()=>{handleMsgType('audio')}}>< FaAudible size={36}/></Button> */}
+      </div> 
+      
+      { noteFlag == 'video' ?
+        <>
+        <div className="flex justify-center mb-3">
+                <input
+                  id="link"
+                  type="url"
+                  required
+                  className="
+                    form-control
+                    text-center
+                    block
+                    w-full
+                    px-3
+                    py-1.5
+                    text-base
+                    font-normal
+                    text-gray-700
+                    bg-white bg-clip-padding
+                    border border-solid  border-secondary
+                    rounded-[0.9rem]
+                    transition
+                    ease-in-out
+                    m-0             "
+                  placeholder="Paste Youtube or Vimeo msg link here"
+                  value={link}
+                  onChange={(e) => setLink(e.target.value)}
+                />
+        </div>
+        <div className="flex justify-center mb-1">
+              <Button className="bg-secondary uppercase text-white" clickMe={handleSubmit}>load message</Button>
+        </div> 
+        <div className="flex justify-center mb-2">
+        <FaYoutube size={25} className="inline-block mb-1 text-red-600"/><FaVimeo size={25} className="inline-block mb-1 text-blue-400"/><FaClipboardCheck size={25} className="inline-block mb-1 text-green-400"/>
+        </div></>    : null
+      }
+{ noteFlag == 'custom' ?
+        <>
+        <Title
+          placeholder="Add Message Title Here"
+          value={title}
+          handleTitleChange={(e) => setTitle(e.target.value)}
+        />
+      
+  
+        <div className="flex justify-center mb-2">
+        <FaYoutube size={25} className="inline-block mb-1 text-red-600"/><FaVimeo size={25} className="inline-block mb-1 text-blue-400"/><FaClipboardCheck size={25} className="inline-block mb-1 text-green-400"/>
+        </div> </>:
+        null
+    }
+{/* { noteFlag == 'audio' ?
+        <>
+        <div className="flex justify-center mb-2">
+        <Button className=" bg-slate-400 uppercase text-white" clickMe={uploadFile} >Select Audio File</Button>
+          <input type="file" 
+          accept="audio/*"
+          onChange={handleFileChange}   
+          ref={hiddenFileInput}
+          style={{display: 'none'}}
+          />
+         
+        </div>
+        <Title
+          placeholder="Add Message Title Here"
+          title={title}
+          handleTitleChange={handleTitleChange}
+        />
+      
+        
+        <div className="flex justify-center mb-2">
+        <FaYoutube size={25} className="inline-block mb-1 text-red-600"/><FaVimeo size={25} className="inline-block mb-1 text-blue-400"/><FaClipboardCheck size={25} className="inline-block mb-1 text-green-400"/>
+        </div> </>:
+        null
+    } */}
+
+
       <div className="flex justify-center mb-2">
             <h3 className='text-lg font-bold text-black text-center'>{errMsg ? errMsg : ''}</h3>
-      </div>    
+      </div>  
+        
       {videoType === 'youtube' && videoId && (
         <>
-        <div className="flex justify-center">
-        <h3 className='text-lg text-secondary'>Title: {title}</h3>
-        </div>
+     
         <div className={isFixed ? "video-container-fixed" : "video-container"}>    
             <div className="flex justify-center mb-5">
             <iframe
@@ -242,9 +348,7 @@ video.notes.toLowerCase().includes(searchTerm.toLowerCase())
       )}
   {videoType === 'vimeo' && videoId && (
   <>
-    <div className="flex justify-center">
-      <h3 className='text-lg text-secondary'>Title: {title}</h3>
-    </div>
+  
     <div className={isFixed ? "video-container-fixed" : "video-container"}>
     <div className="flex justify-center mb-2">
       <iframe
@@ -262,26 +366,13 @@ video.notes.toLowerCase().includes(searchTerm.toLowerCase())
   
 )}
      {title && !errMsg && (
-        <>
-        <div className="flex justify-center mb-1">
-          <h2 className='text-lg text-secondary'>Make Notes as You Watch & Listen:</h2>
-          </div>
-            <div className="flex justify-center mb-5">
-            <textarea
-                value={notes}
-                id="notes"
-                onChange={handleNotesChange}
-                placeholder="Write your notes here..."
-                rows="10"
-                cols="80"
-                className=' p-5'
-            ></textarea>
-           </div>
-            <div className="flex justify-center mb-5">
+      <>
+       
+      <Mnotes handleNotesChange={handleNotesChange} notes={notes} titleFlag={true} title={title} handleTitleChange={handleTitleChange} reference={reference} handleReferenceChange={handleReferenceChange} revelation={revelation} handleRevelationChange={handleRevelationChange} audioFile={audioFile}/>
+      <div className="flex justify-center mb-5">
             <Button className=" bg-neutral-900 uppercase text-white" clickMe={handleSave}>Close</Button>
-        </div>
-    
-        </>
+      </div>
+       </>
       )}
 
 <div className="flex justify-center mb-1">
@@ -293,7 +384,8 @@ video.notes.toLowerCase().includes(searchTerm.toLowerCase())
                 onChange={(e) => setSearchTerm(e.target.value)}
             /> 
 </div>
-{savedVideos.length > 0 && (
+{
+  savedVideos.length > 0 && (
       <div className="grid md:grid-cols-3 gap-2">
       {
             filteredVideos.slice().reverse().map((savedVideo, index)=> (
@@ -305,7 +397,7 @@ video.notes.toLowerCase().includes(searchTerm.toLowerCase())
               </div> 
               <div className="flex justify-center">
                 <Button className="bg-amber-700 uppercase text-white mr-2" clickMe={() => handleSavedVideoClick(index)}>
-                  Listen
+                  Open
                 </Button>
                 <Button className="bg-purple-700 uppercase text-white" clickMe={() => handleDelete(index)}>
                   Delete
@@ -314,9 +406,8 @@ video.notes.toLowerCase().includes(searchTerm.toLowerCase())
             </div>
        
             )
-      )
-}
-  
+        )
+      }
       </div>
 )
 }

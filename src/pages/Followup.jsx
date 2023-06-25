@@ -47,15 +47,15 @@
       }
 
       const handleContactClick = (index) => {
-        const originalIndex = contacts.length - 1 - index;
+        const originalIndex = filteredContacts.length - 1 - index;
         setShowForm(false);
         setSelectedContactIndex(originalIndex);
         setShowContact(true);
         setFormData({
-          name: contacts[originalIndex].name,
-          number: contacts[originalIndex].number,
-          comment:contacts[originalIndex].comment,
-          selectedCountry:contacts[originalIndex].selectedCountry,
+          name: filteredContacts[originalIndex].name,
+          number: filteredContacts[originalIndex].number,
+          comment:filteredContacts[originalIndex].comment,
+          selectedCountry:filteredContacts[originalIndex].selectedCountry,
         });
       
         const element = document.querySelector('#contact-form');
@@ -259,7 +259,7 @@
             </div>  
  
           <Button type="submit" className="bg-green-700 uppercase text-white">
-            Update Notes
+            Update Contact
           </Button>
         </form>
       )}

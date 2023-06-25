@@ -52,17 +52,17 @@ function Scriptures() {
 
    
     const handleDataClick = (index) => {
-        const originalIndex = datas.length - 1 - index;
+        const originalIndex = filteredDatas.length - 1 - index;
         setShowForm(false);
         setShowMemoryForm(false);
         setShowData(true);
         setSelectedDataIndex(originalIndex);
         setFormData({
-          version: datas[originalIndex].version,
-          book: datas[originalIndex].book,
-          chapter: datas[originalIndex].chapter,
-          verses: datas[originalIndex].verses,
-          comment: datas[originalIndex].comment,
+          version: filteredDatas[originalIndex].version,
+          book: filteredDatas[originalIndex].book,
+          chapter: filteredDatas[originalIndex].chapter,
+          verses: filteredDatas[originalIndex].verses,
+          comment: filteredDatas[originalIndex].comment,
         });
              
         const element = document.querySelector('#contact-form');
@@ -237,7 +237,7 @@ function Scriptures() {
         </div>
         {!showForm && (
           <Button className="bg-secondary uppercase text-white mb-2" clickMe={addDataForm}>
-            Add Must Know Scriptures
+            Add Your Must-Know Scriptures
           </Button>
         )}
 

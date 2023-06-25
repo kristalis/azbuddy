@@ -5,118 +5,127 @@ import logo from '../assets/mychurchbuddy-logo-profile.png';
 import Bottomtab from '../navigation/Bottomtab'; 
 import Button from '../components/PressableButton';
 import { FaArchive } from "react-icons/fa";
+import Mnotes from '../components/Mnotes';
 
 function Quiettime() {
-//      const [datas, setDatas] = useState(JSON.parse(localStorage.getItem('quietTime')) || []);
+     const [datas, setDatas] = useState(JSON.parse(localStorage.getItem('quietTime')) || []);
   
-//     const [selectedDate, setSelectedDate] = useState(new Date());
-//     const [passage, setPassage] = useState('');
-//     const [reflection, setReflection] = useState('');
-//     const [reference, setReference] = useState('');
-//     const [revelation, setRevelation] = useState('');
+    const [selectedDate, setSelectedDate] = useState(new Date());
+    const [passage, setPassage] = useState('');
+    const [reflection, setReflection] = useState('');
+    const [reference, setReference] = useState('');
+    const [revelation, setRevelation] = useState('');
 
-//     const [showForm, setShowForm] = useState(false);
-//     const [showDataForm, setShowData] = useState(false);
-//     const [formData, setFormData] = useState();
+    const [showForm, setShowForm] = useState(false);
+    const [showDataForm, setShowData] = useState(false);
+    const [formData, setFormData] = useState();
 
-//     const [searchQuery, setSearchQuery] = useState('');
-//     const [selectedDataIndex, setSelectedDataIndex] = useState(-1);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [selectedDataIndex, setSelectedDataIndex] = useState(-1);
 
-//     const handleSubmit = (e) => {
-//         e.preventDefault();
+    const handleSubmit = (e) => {
+        e.preventDefault();
     
-//         const newData = { passage, reflection, selectedDate, reference, revelation };
-//         const updatedDatas = [...datas, newData];
-//         setDatas(updatedDatas);
-//         localStorage.setItem('quietTime', JSON.stringify(updatedDatas));
-//         setSelectedDate(new Date());
-//         setPassage('');
-//         setReflection('');
-//         setReference('');
-//         setRevelation('');        
-//         setShowForm(false);
-//       };
-//       const addDataForm = () => {
-//         setShowForm(true);
-//         setShowData(false);
-//       }
+        const newData = { passage, reflection, selectedDate, reference, revelation };
+        const updatedDatas = [...datas, newData];
+        setDatas(updatedDatas);
+        localStorage.setItem('quietTime', JSON.stringify(updatedDatas));
+        setSelectedDate(new Date());
+        setPassage('');
+        setReflection('');
+        setReference('');
+        setRevelation('');        
+        setShowForm(false);
+      };
+
+      const addDataForm = () => {
+        setShowForm(true);
+        setShowData(false);
+      }
 
    
-//     const handleDataClick = (index) => {
-//         const originalIndex = datas.length - 1 - index;
-//         setShowForm(false);
-//         setShowData(true);
-//         setSelectedDataIndex(originalIndex);
-//         setFormData({
-//           selectedDate: datas[originalIndex].selectedDate,
-//           passage: datas[originalIndex].passage,
-//           reflection: datas[originalIndex].reflection,
-//           reference: datas[originalIndex].reference,
-//           revelation: datas[originalIndex].revelation,
-//         });
+    const handleDataClick = (index) => {
+        const originalIndex = filteredDatas.length - 1 - index;
+        setShowForm(false);
+        setShowData(true);
+        setSelectedDataIndex(originalIndex);
+        setFormData({
+          selectedDate: filteredDatas[originalIndex].selectedDate,
+          passage: filteredDatas[originalIndex].passage,
+          reflection: filteredDatas[originalIndex].reflection,
+          reference: filteredDatas[originalIndex].reference,
+          revelation: filteredDatas[originalIndex].revelation,
+        });
              
-//         const element = document.querySelector('#buddy-form');
-//         if (element) {
-//           element.scrollIntoView({ behavior: 'smooth' });
-//         }
-//       };
-//       const handleFormSubmit = (e) => {
-//         e.preventDefault();
-//         const updatedData = {
-//           selectedDate: moment(formData.selectedDate).format('YYYY-MM-DD'),
-//           passage: formData.passage,
-//           reflection: formData.reflection,
-//           reference: formData.reference,
-//           revelation: formData.revelation,
-//         };
-//         const updatedDatas = [...datas];
-//         updatedDatas[selectedDataIndex] = updatedData;
-//         setDatas(updatedDatas);
-//         setShowData(false);
-//         setShowForm(false);
-//         localStorage.setItem('quietTime', JSON.stringify(updatedDatas));
-//       };
+        const element = document.querySelector('#buddy-form');
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      };
+      const handleFormSubmit = (e) => {
+        e.preventDefault();
+        const updatedData = {
+          selectedDate: moment(formData.selectedDate).format('YYYY-MM-DD'),
+          passage: formData.passage,
+          reflection: formData.reflection,
+          reference: formData.reference,
+          revelation: formData.revelation,
+        };
+        const updatedDatas = [...datas];
+        updatedDatas[selectedDataIndex] = updatedData;
+        setDatas(updatedDatas);
+        setShowData(false);
+        setShowForm(false);
+        localStorage.setItem('quietTime', JSON.stringify(updatedDatas));
+      };
   
+      const addReference= (e) => {
+        setReference(e.target.value);
+      };
+      const addReflection= (e) => {
+        setReflection(e.target.value);
+      };
+      const addRevelation= (e) => {
+        setRevelation(e.target.value);
+      };
+    const handlePassageChange = (event) => {
+    setFormData({ ...formData, passage: event.target.value });
+    };
+    const handleReflectionChange = (event) => {
+    setFormData({ ...formData, reflection: event.target.value });
+    };
+    const handleReferenceChange = (event) => {
+        setFormData({ ...formData, reference: event.target.value });
+    };
+    const handleRevelationChange = (event) => {
+        setFormData({ ...formData, revelation: event.target.value });
+    };
+    const handleDataDateChange = (event) => {
+    setFormData({ ...formData, selectedDate: new Date(event.target.value) });
+    };
    
-
-//     const handlePassageChange = (event) => {
-//     setFormData({ ...formData, passage: event.target.value });
-//     };
-//     const handleReflectionChange = (event) => {
-//     setFormData({ ...formData, reflection: event.target.value });
-//     };
-//     const handleReferenceChange = (event) => {
-//         setFormData({ ...formData, reference: event.target.value });
-//     };
-//     const handleRevelationChange = (event) => {
-//         setFormData({ ...formData, revelation: event.target.value });
-//     };
-//     const handleDataDateChange = (event) => {
-//     setFormData({ ...formData, selectedDate: new Date(event.target.value) });
-//     };
-   
-//     const handleSearch = (event) => {
-//     setShowForm(false);
-//     setShowData(false);
-//     setSearchQuery(event.target.value);
+    const handleSearch = (event) => {
+    setShowForm(false);
+    setShowData(false);
+    setSearchQuery(event.target.value);
   
 
-//     };
+    };
 
-//     const filteredDatas = datas.filter((data) => {
-//       //  return moment(data.selectedDate).format('YYYY-MM-DD').includes(searchQuery);
-//         return data.passage.toLowerCase().includes(searchQuery.toLowerCase())||
-//         data.reference.toLowerCase().includes(searchQuery.toLowerCase());
-//     });
+    const filteredDatas = datas.filter((data) => {
+      //  return moment(data.selectedDate).format('YYYY-MM-DD').includes(searchQuery);
+        return data.passage.toLowerCase().includes(searchQuery.toLowerCase())||
+        data.reference.toLowerCase().includes(searchQuery.toLowerCase());
+    });
       
 
 
 
-//   // Handle the date input change event
-//   function handleDateChange(e) {
-//     const selectedMonday = new Date(e.target.value);
-//     setSelectedDate(selectedMonday);
-//  }
+  // Handle the date input change event
+  function handleDateChange(e) {
+    const selectedMonday = new Date(e.target.value);
+    setSelectedDate(selectedMonday);
+ }
   
   
 
@@ -125,7 +134,8 @@ function Quiettime() {
     
         <Bottomtab/>
         <main>
-        {/* <div className="relative px-2 lg:px-8 py-2">
+
+         <div className="relative px-2 lg:px-8 py-2">
           <header className="flex justify-center ">
             <img src={logo}   alt="A-Z Bible Characters" className='logo'/>
           </header>
@@ -168,6 +178,9 @@ function Quiettime() {
                 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none
               "
             />
+            <div className="flex justify-center mb-1">
+             <h2 className='text-lg text-secondary'>Record your Quietime</h2>
+            </div>
             <input
               type="text"
               required
@@ -193,82 +206,8 @@ function Quiettime() {
               placeholder="Passage(s) [Matthew 6:33]"
               value={passage}
               onChange={(e) => setPassage(e.target.value)}
-            />         
-            <textarea
-              rows="4"
-              className="
-              form-control
-              text-center
-              block
-              w-full
-              px-3
-              py-1.5
-              mb-2
-              text-base
-              font-normal
-              text-gray-700
-              bg-white bg-clip-padding
-              border border-solid  border-secondary
-              rounded-[0.9rem]
-              transition
-              ease-in-out
-              m-0
-              focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none
-            "
-              placeholder="Reflection on passage"
-              value={reflection}
-              onChange={(e) => setReflection(e.target.value)}
-            />
-            <textarea
-              rows="3"
-              className="
-              form-control
-              text-center
-              block
-              w-full
-              px-3
-              py-1.5
-              mb-2
-              text-base
-              font-normal
-              text-gray-700
-              bg-white bg-clip-padding
-              border border-solid  border-secondary
-              rounded-[0.9rem]
-              transition
-              ease-in-out
-              m-0
-              focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none
-            "
-              placeholder="Deeper reference(s) on passage"
-              value={reference}
-              onChange={(e) => setReference(e.target.value)}
-            />
-            <textarea
-              rows="4"
-              className="
-              form-control
-              text-center
-              block
-              w-full
-              px-3
-              py-1.5
-              mb-2
-              text-base
-              font-normal
-              text-gray-700
-              bg-white bg-clip-padding
-              border border-solid  border-secondary
-              rounded-[0.9rem]
-              transition
-              ease-in-out
-              m-0
-              focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none
-            "
-              placeholder="What is the Lord telling you"
-              value={revelation}
-              onChange={(e) => setRevelation(e.target.value)}
-            />
+            />    
+            <Mnotes handleNotesChange={addReflection} notes={reflection} titleFlag={true} reference={reference} handleReferenceChange={addReference} revelation={revelation} handleRevelationChange={addRevelation} />
             <Button className="bg-secondary uppercase text-white mb-2"  type="submit">Save Quiet Time</Button>
           </form>
         )}
@@ -383,7 +322,7 @@ function Quiettime() {
 )
 }
 <div className='block rounded-lg shadow-lg bg-primary py-5'>
-  </div> */}
+  </div>
         </main>
         </>
       );
